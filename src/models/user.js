@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
         }
     }, phoneNumber:{
         type: String,
+        unique: true,
         length:11
     },gender:{
         type:String,
