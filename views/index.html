@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sign up</title>
+        <link rel="stylesheet" href="/css/Signup-form.css">
+    </head>
+    <body>
+        <form name="signup" method="GET">
+            <h1>Sign up for Go-FindMe</h1>
+            <p class="create"> Create a Go-FindMe email address </p>
+            <div class="name">
+                <label class="fname">First Name</label>
+                <label class="lname">Last Name</label> <br>
+                <input type="text" name="finput" required placeholder=" &nbsp;&nbsp;eg. Ahmed">
+                <input type="text" name="linput" required placeholder=" &nbsp;&nbsp;eg. Hajjaj">
+            </div>
+            <div class="gender">
+                <div class="gen-inp">
+                    <input type="radio" name="sex">Male
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="sex">Female
+                </div>
+            </div>
+            <div class="email-pass">
+                <label class="email">Email Address</label>
+                <input type="email" name="email" placeholder=" &nbsp;&nbsp;eg. Ahmed@yahoo.com" required>
+                <label class="pass">Password</label>
+                <input type="password" name="pass" placeholder=" &nbsp;&nbsp;Type your Password" required>
+            </div>
+            <div class="info">
+                <label class="tele">Mobile Phone Number</label>
+                <input type="tel" name="tele" required placeholder=" &nbsp;&nbsp;eg. 01012345678" maxlength="11">
+                <label class="birth">Birthday</label>
+                <input type="date" name="birth" value="2020-01-30">
+            </div>
+                <h6 class="policy">By clicking "Signup", you agree to the Terms and Privacy Policy</h6>
+            <input type="submit" name="button1" value="Signup">
+            <h6 class="member">Already have an account? <a href="Signin-up.html">Signin</a></h6>
+        </form>
+    </body>
+</html>

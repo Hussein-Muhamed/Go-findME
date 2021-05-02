@@ -6,8 +6,15 @@ const path = require('path')
 
 const port = process.env.PORT || 3000
 const app = express()
+
 const publicDirectoryPath = path.join(__dirname, '../public')
+const viewsDirectoryPath = path.join(__dirname, '../views')
+// const viewPath = path.join(__dirname, '../public/css')
+// const stylePath = path.join(__dirname, '../public/html')
 app.use(express.static(publicDirectoryPath))
+app.use(express.static(viewsDirectoryPath))
+// app.use(express.static(viewPath))
+// app.use(express.static(stylePath))
 
 app.use(express.json())
 

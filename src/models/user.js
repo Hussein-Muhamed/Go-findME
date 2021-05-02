@@ -30,6 +30,12 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Age must be a postive number')
             }
         }
+    }, phoneNumber:{
+        type: String,
+        length:11
+    },gender:{
+        type:String,
+        require: true,
     }
 })
 
