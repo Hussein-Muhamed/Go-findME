@@ -31,9 +31,10 @@ const userSchema = new mongoose.Schema({
             }
         }
     }, phoneNumber:{
-        type: String,
+        type: Number,
         unique: true,
-        length:11
+        minLength:11,
+        maxLength:11
     },gender:{
         type:String,
         require: true,
@@ -41,12 +42,12 @@ const userSchema = new mongoose.Schema({
 })
 
 // to hash the password 
-userSchema.pre('save',async function(next) {
-    const user = this 
-    if(user.isModified('password'))
-        user.password = await bcrypt.hash(user.password, 8)
-    next()
-})
+// userSchema.pre('save',async function(next) {
+//     const user = this 
+//     if(user.isModified('password'))
+//         user.password = await bcrypt.hash(user.password, 8)
+//     next()
+// })
 
 // login check
 userSchema.statics.findByCredentials = async (email, password) =>{
