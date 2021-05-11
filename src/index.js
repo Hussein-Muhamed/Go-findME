@@ -4,6 +4,7 @@ require('./db/mongoose')
 const User = require('./models/user')
 const path = require('path')
 const userrouter = require('./routers/user')
+const auth = require('./middleware/auth')
 
 
 const port = process.env.PORT || 3000
