@@ -23,14 +23,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         minLength: 7,
         required: true,
-    }, age:{
-        type: Number,
+    }, birthdate:{
+        type: String,
         default: 0,
-        validate(value) {
-            if (value < 0) {
-                throw new Error('Age must be a postive number')
-            }
-        }
+        lastActiveAt: true
     }, phoneNumber:{
         type: Number,
         unique: true,
