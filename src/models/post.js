@@ -15,14 +15,24 @@ const postSchema = new mongoose.Schema({
         type:String,
         required: true,
         trim: true,
-    }, region :{
+    }, completed:{
+        type:Boolean,
+        required:true
+    }
+    , region :{
         type:String,
         required: true,
         trim: true,
     }, gender :{
         type:String,
         required:true
+    }, owner:{
+        type:mongoose.Schema.Types.ObjectID,
+        required:true,
+        ref:'User'
     }
+}, {
+    timestamps: true
 })
 
 const Post = new mongoose.model('Post',postSchema)

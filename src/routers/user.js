@@ -5,10 +5,12 @@ const auth = require('../middleware/auth')
 const { response } = require('express')
 const {sendWelcomeEmail, sendCancelationEmail} = require('../emails/account')
 
+
 router.post('/users', async (req, res)=>{
-    const user = await new User(req.body)
+    const user =  new User(req.body)
     try{
         await user.save()
+        sendWelcomeEmail(user.email, user.fname)
         const token = await user.generateAuthtoken()
         res.status(201).send({user, token})
     } catch (e){
@@ -45,9 +47,8 @@ router.post('/users/logout', auth , async (req, res)=>{
 
 router.delete('/users/me', auth , async (req, res)=>{
     try{
-        // const user = await User.findByIdAndDelete(req.params.id)
-        // res.status(200).send("User has been deleted!")
         await req.user.remove()
+        sendCancelationEmail(req.user.email, req.user.fname)
         res.send(req.user)
     } catch (e){
         res.status(500).send(e)

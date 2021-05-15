@@ -7,6 +7,7 @@ const path = require('path')
 const userrouter = require('./routers/user')
 const postrouter = require('./routers/post')
 const auth = require('./middleware/auth')
+// const {sendWelcomeEmail, sendCancelationEmail} = require('./emails/account')
 
 
 
@@ -29,3 +30,10 @@ app.use(postrouter)
 app.listen(port , ()=>{
     console.log(`The server connection on port ${port}`)
 })
+
+// const main = async () => {
+//     const user = await User.findById('609a2e76dc457b41e8055785')
+//     await user.populate('posts').execPopulate()
+//     console.log(user.posts)
+// } 
+// main()

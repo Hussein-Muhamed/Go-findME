@@ -28,10 +28,17 @@ const userSchema = new mongoose.Schema({
         default: 0,
         lastActiveAt: true
     }, phoneNumber:{
-        type: Number,
+        type: String,
         unique: true,
         minLength:11,
-        maxLength:11
+        maxLength:11,
+        validate(value){
+            if(!validator.isInt(value))
+                throw new Error('phone number is only number')
+        }, validate(value){
+            if(!validator.isMobilePhone(value,'ar-EG'))
+                throw new Error('check your phone number')
+        }
     },gender:{
         type:String,
         require: true,
@@ -41,8 +48,17 @@ const userSchema = new mongoose.Schema({
             required: true,
         }
     }] 
+},{
+    timestamps:true
+})
+//to create virtual proparty
+userSchema.virtual('posts',{
+    ref:'Post',
+    localField:'_id',
+    foreignField:'owner'
 })
 
+// to create auth token 
 userSchema.methods.generateAuthtoken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() },'thisismynewcourse')
