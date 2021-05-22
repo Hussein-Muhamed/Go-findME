@@ -3,10 +3,13 @@ const express = require('express')
 require('./db/mongoose')
 const User = require('./models/user')
 const Post = require('./models/post')
+const Trusted = require('./models/trustedPeople')
 const path = require('path')
 const userrouter = require('./routers/user')
 const postrouter = require('./routers/post')
+const trustedrouter = require('./routers/trustedPeolple')
 const auth = require('./middleware/auth')
+const validator = require('validator')
 // const {sendWelcomeEmail, sendCancelationEmail} = require('./emails/account')
 
 
@@ -26,15 +29,9 @@ app.use(express.static(viewsDirectoryPath))
 app.use(express.json())
 app.use(userrouter)
 app.use(postrouter)
+app.use(trustedrouter)
 
 app.listen(port , ()=>{
     console.log(`The server connection on port ${port}`)
 })
 
-const multer = require('multer')
-const upload = multer({
-    dest:'images',
-})
-app.post('/upload',upload.single('upload'), (req, res)=>{
-    res.send()
-})

@@ -4,7 +4,13 @@ const postSchema = new mongoose.Schema({
     description:{
         type:String,
         required: true,
-    }, date:{
+    }, name:{
+        type:String,
+    }, age:{
+        type:String,
+        required: true,
+    }
+    ,date:{
         type: String,
         lastActiveAt: Date,
         required: true,
@@ -33,5 +39,5 @@ const postSchema = new mongoose.Schema({
     timestamps: true
 })
 
-const Post = new mongoose.model('Post',postSchema)
+const Post =  mongoose.model('Post',postSchema)
 module.exports = Post

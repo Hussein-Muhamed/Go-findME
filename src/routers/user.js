@@ -10,7 +10,7 @@ const upload = multer({
     limits:{
         fileSize:1000000
     },
-    fileFilter(req,file, cb){
+    fileFilter(req, file, cb){
         if (!file.originalname.match(/\.(jpg|png|jpeg)$/))
             return cb(new Error ('please upload image'))
         cb(undefined, true)
@@ -20,7 +20,7 @@ const upload = multer({
 router.post('/users/me/avatar', auth , upload.single('avatar'), async (req, res)=>{
      req.user.avatar = req.file.buffer
      await req.user.save()
-    res.send()
+    res.status(200).send()
 }, (error, req, res, next)=>{
     res.status(400).send({error:error.message})
 })
@@ -72,10 +72,12 @@ router.get('/users/me', auth, async (req, res)=>{
     res.send(req.user)
 })
 
+
+
 //logout
 router.post('/users/logout', auth , async (req, res)=>{
     try{
-        req.user.tokens = req.user.tokens.filter((token)=>{
+        req.user.tokens = req.user.tokens.filter((token)=>{ 
             return token.token !== req.token
         })
         await req.user.save()

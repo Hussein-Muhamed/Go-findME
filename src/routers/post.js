@@ -23,6 +23,7 @@ router.post('/post', auth, upload.single('image'),  async (req, res)=>{
         owner: req.user._id,
         image: req.file.buffer
     })
+    
     try{
         await posts.save()
         res.status(201).send()
@@ -51,8 +52,6 @@ router.get('/posts',auth, async (req, res)=>{
         match.typeofperson = req.query.typeofperson
     if (req.query.gender )
         match.gender = req.query.gender
-    if (req.query.completed)
-        match.completed = req.query.completed === 'true'
     try{
         await req.user.populate({
             path:'posts',
