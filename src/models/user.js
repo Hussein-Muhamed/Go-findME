@@ -47,10 +47,19 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true,
         }
-    }] 
+    }], avatar:{
+        type:Buffer,
+    } 
 },{
     timestamps:true
 })
+//to create virtual proparty
+userSchema.virtual('trusted',{
+    ref:'Trusted',
+    localField:'_id',
+    foreignField:'owner'
+})
+
 //to create virtual proparty
 userSchema.virtual('posts',{
     ref:'Post',

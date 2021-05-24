@@ -4,7 +4,13 @@ const postSchema = new mongoose.Schema({
     description:{
         type:String,
         required: true,
-    }, date:{
+    }, name:{
+        type:String,
+    }, age:{
+        type:String,
+        required: true,
+    }
+    ,date:{
         type: String,
         lastActiveAt: Date,
         required: true,
@@ -15,11 +21,7 @@ const postSchema = new mongoose.Schema({
         type:String,
         required: true,
         trim: true,
-    }, completed:{
-        type:Boolean,
-        required:true
-    }
-    , region :{
+    }, region :{
         type:String,
         required: true,
         trim: true,
@@ -30,10 +32,12 @@ const postSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectID,
         required:true,
         ref:'User'
+    }, image:{
+        type:Buffer,
     }
 }, {
     timestamps: true
 })
 
-const Post = new mongoose.model('Post',postSchema)
+const Post =  mongoose.model('Post',postSchema)
 module.exports = Post
