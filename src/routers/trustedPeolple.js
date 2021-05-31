@@ -27,6 +27,7 @@ router.get('/trusted', auth, async(req, res)=>{
     }
 })
 
+//to delete user
 router.delete('/trusted/:id', auth, async(req, res)=>{
     try{
         const trusted = await Trusted.findByIdAndDelete(req.params.id)

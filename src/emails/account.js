@@ -3,6 +3,7 @@ const sendgridAPIKey = 'SG.qdE3cWHjTNOT0LqzHUZm9A.L862TJnF2YD-H05ENZOu9WXZstnrCc
 
 sgMail.setApiKey(sendgridAPIKey)
 
+// api to send reset code 
 
 const sendWelcomeEmail = (email, name) => {
     sgMail.send({

@@ -4,6 +4,7 @@ const router = express.Router()
 const auth = require('../middleware/auth')
 const multer = require('multer')
 
+// to upload photos
 const upload = multer({
     limits:{
         fileSize:5000000
@@ -15,9 +16,8 @@ const upload = multer({
     }
 })
 
+// to create post
 router.post('/post', auth, upload.single('image'),  async (req, res)=>{
-    // const posts = await new Post(req.body)
-    
     const posts = new Post({
         ...req.body,
         owner: req.user._id,
@@ -32,16 +32,19 @@ router.post('/post', auth, upload.single('image'),  async (req, res)=>{
     }
 })
 
+// to show pic from post
 router.get('/post/:id/image', async(req, res)=>{
     try{
         const post = await Post.findById(req.params.id)
         res.set('Content-Type','image/jpg')
-        res.send(post.image)
+        res.status(200).send()
     } catch (e) {
         res.status(404).send()
     }
 })
 
+// to show post 
+// to make filter on post
 router.get('/posts',auth, async (req, res)=>{
     const match = {}
     if(req.query.region)
@@ -67,6 +70,7 @@ router.get('/posts',auth, async (req, res)=>{
     }
 })
 
+//to search
 router.get('/posts/:id', async (req, res)=>{
     try{
         const posts = await Post.findOne(req.params._id)
@@ -76,6 +80,7 @@ router.get('/posts/:id', async (req, res)=>{
     }
 })
 
+//to delete post
 router.delete('/posts/:id',auth, async (req, res)=>{
     try{
         const posts = await Post.findOneAndDelete({_id: req.params.id, owner:req.user._id})

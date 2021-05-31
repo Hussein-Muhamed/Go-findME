@@ -33,9 +33,6 @@ const userSchema = new mongoose.Schema({
         minLength:11,
         maxLength:11,
         validate(value){
-            if(!validator.isInt(value))
-                throw new Error('phone number is only number')
-        }, validate(value){
             if(!validator.isMobilePhone(value,'ar-EG'))
                 throw new Error('check your phone number')
         }
@@ -53,6 +50,7 @@ const userSchema = new mongoose.Schema({
 },{
     timestamps:true
 })
+
 //to create virtual proparty
 userSchema.virtual('trusted',{
     ref:'Trusted',
