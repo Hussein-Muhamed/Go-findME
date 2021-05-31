@@ -24,7 +24,10 @@ const tpeopleSchema = new mongoose.Schema({
             if(!validator.isMobilePhone(value,'ar-EG'))
                 throw new Error('Uncorrect phone number')
         }
-    }, owner:{
+    }, gender:{
+        type:String,
+        required:true
+    },owner:{
         type:mongoose.Schema.Types.ObjectID,
         required:true,
         ref:'User'

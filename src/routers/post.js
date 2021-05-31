@@ -37,7 +37,7 @@ router.get('/post/:id/image', async(req, res)=>{
     try{
         const post = await Post.findById(req.params.id)
         res.set('Content-Type','image/jpg')
-        res.status(200).send()
+        res.status(200).send(post.image)
     } catch (e) {
         res.status(404).send()
     }

@@ -4,7 +4,7 @@ const Trusted = require('../models/trustedPeople')
 const auth = require('../middleware/auth')
 const router = express.Router()
 
-
+// to add trusted person
 router.post('/trusted', auth, async (req, res)=>{
     const trusted = new Trusted({
         ...req.body,
@@ -18,6 +18,7 @@ router.post('/trusted', auth, async (req, res)=>{
     }
 })
 
+// to show trusted people
 router.get('/trusted', auth, async(req, res)=>{
     try{
         const trusted = await  Trusted.find({})
@@ -37,4 +38,13 @@ router.delete('/trusted/:id', auth, async(req, res)=>{
     }
 })
 
+//to search spesific user
+router.get('/trusted/:id', auth, async(req, res)=>{
+    try{
+        const trusted = await Trusted.findOne(req.params._id)
+        res.status(200).send(trusted)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 module.exports = router
