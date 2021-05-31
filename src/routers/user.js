@@ -73,7 +73,6 @@ router.get('/users/me', auth, async (req, res)=>{
 })
 
 
-
 //logout
 router.post('/users/logout', auth , async (req, res)=>{
     try{
