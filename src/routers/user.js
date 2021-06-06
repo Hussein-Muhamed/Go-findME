@@ -60,8 +60,10 @@ router.post('/users/login', async (req, res)=>{
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthtoken()
         res.send({user, token})
+        console.log('uncorret')
     } catch (e){
         res.status(400).send()
+        console.log('uncorret')
     }
 })
 

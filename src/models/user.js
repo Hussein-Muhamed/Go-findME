@@ -88,8 +88,11 @@ userSchema.pre('save',async function(next) {
 // login check
 userSchema.statics.findByCredentials = async (email, password) =>{
     const user = await User.findOne({email})
-    if(!user)
+    if(!user) {
         throw new Error('Uncorrect email')
+        console.log('uncorrect email')
+    }
+       
     const ismatch = await bcrypt.compare(password, user.password)
     if(!ismatch)
         throw new Error('Uncorrect password')
