@@ -25,7 +25,7 @@ class Signin extends Component {
     const user = {email: this.state.email , password: this.state.password}
     event.preventDefault();
     axios
-        .post("http://localhost:3000/users/login",{ headers: {"Access-Control-Allow-Origin": "*"}} ,user)
+        .post("http://localhost:3000/users/login" ,user)
         .then(function (response) {
           console.log(response);
         })
