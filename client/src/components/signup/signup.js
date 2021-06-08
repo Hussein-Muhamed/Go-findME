@@ -71,7 +71,7 @@ class signup extends Component {
             </div>
             <div className="form-group">
               <label htmlFor="Phone-Number">PhoneNumber</label>
-              <input type="text" name="Phone-Number" placeholder="Phone-Number" value={this.state.value} onChange={this.handlePhoneNumberChange} />
+              <input type="Number" name="Phone-Number" placeholder="Phone-Number" value={this.state.value} onChange={this.handlePhoneNumberChange} />
             </div>
             <div className="form-group">
               <label htmlFor="gender">Gender</label>
@@ -83,7 +83,7 @@ class signup extends Component {
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input type="text" name="password" placeholder="password" value={this.state.value} onChange={this.handlePasswordChange}/>
+              <input type="password" name="password" placeholder="password" value={this.state.value} onChange={this.handlePasswordChange}/>
             </div>
           </div>
         </div>

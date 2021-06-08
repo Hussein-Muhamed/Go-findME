@@ -44,7 +44,7 @@ class Signin extends Component {
           </div>
           <div className="form">
             <div className="form-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">Email address</label>
               <input type="text" name="username" placeholder="username" value={this.state.value} onChange={this.handleEmailChange} />
             </div>
             <div className="form-group">
