@@ -47,7 +47,8 @@ router.get('/users/:id/avatar',async (req, res)=>{
 router.post('/users', async (req, res)=>{
     const user =  new User(req.body)
     try{
-        await user.save()
+        await user.save() 
+        sendWelcomeEmail(user.email, user.userName)
         const token = await user.generateAuthtoken()
         res.status(201).send({user, token})
     } catch (e){
@@ -63,7 +64,6 @@ router.post('/users/login', async (req, res)=>{
         console.log('uncorret')
     } catch (e){
         res.status(400).send()
-        console.log('uncorret')
     }
 })
 
@@ -91,11 +91,11 @@ router.post('/users/logout', auth , async (req, res)=>{
 
 router.delete('/users/me', auth , async (req, res)=>{
     try{
-        await req.user.remove()
-        sendCancelationEmail(req.user.email, req.user.fname)
-        res.send(req.user)
+       const user = await req.user.remove()
+        sendCancelationEmail(user.email, user.userName)
+        res.status(200).send(user)
     } catch (e){
-        res.status(500).send(e)
+        res.status(400).send(e)
     }
 })
 
