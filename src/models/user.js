@@ -4,10 +4,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
-    fname:{
-        type: String,
-        required: true,
-    }, lname:{
+    userName:{
         type: String,
         required: true,
     }, email:{
@@ -33,6 +30,9 @@ const userSchema = new mongoose.Schema({
         minLength:11,
         maxLength:11,
         validate(value){
+            if(!validator.isInt(value))
+                throw new Error('phone number is only number')
+        }, validate(value){
             if(!validator.isMobilePhone(value,'ar-EG'))
                 throw new Error('check your phone number')
         }
@@ -50,7 +50,6 @@ const userSchema = new mongoose.Schema({
 },{
     timestamps:true
 })
-
 //to create virtual proparty
 userSchema.virtual('trusted',{
     ref:'Trusted',
@@ -86,8 +85,11 @@ userSchema.pre('save',async function(next) {
 // login check
 userSchema.statics.findByCredentials = async (email, password) =>{
     const user = await User.findOne({email})
-    if(!user)
+    if(!user) {
         throw new Error('Uncorrect email')
+        console.log('uncorrect email')
+    }
+       
     const ismatch = await bcrypt.compare(password, user.password)
     if(!ismatch)
         throw new Error('Uncorrect password')
