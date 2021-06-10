@@ -21,6 +21,12 @@ router.post('/post', auth, upload.single('image'),  async (req, res)=>{
     const posts = new Post({
         ...req.body,
         owner: req.user._id,
+        // connect to api 
+        // add photo, post.id to api 
+        // {
+        //     image:binary,
+        //     name: post.id
+        // }
         image: req.file.buffer
     })
     
@@ -32,6 +38,11 @@ router.post('/post', auth, upload.single('image'),  async (req, res)=>{
     }
 })
 
+
+// get image from api using post.id
+//
+
+//get image from database
 router.get('/post/:id/image', async(req, res)=>{
     try{
         const post = await Post.findById(req.params.id)
