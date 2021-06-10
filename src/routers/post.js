@@ -43,7 +43,7 @@ router.get('/post/:id/image', async(req, res)=>{
     }
 })
 
-// to show post 
+// to read post 
 // to make filter on post
 router.get('/posts',auth, async (req, res)=>{
     const match = {}
