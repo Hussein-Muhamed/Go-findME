@@ -3,7 +3,7 @@ const router = express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const { response } = require('express')
-const {sendWelcomeEmail, sendCancelationEmail} = require('../emails/account')
+// const {sendWelcomeEmail, sendCancelationEmail} = require('../emails/account')
 const multer = require('multer')
 
 const upload = multer({
@@ -137,5 +137,14 @@ router.patch('/users/:id', async (req, res)=>{
 })
 
 // router.put('/forget-password', forgetPassword)
+router.post('/forgetpassowrd',auth, async (req, res)=>{
+    try{
+        const user = await User.findByIdAndUpdate(req.params.id)
+        resetPassword(user.email)
+        res.status(200).send(user)
+    } catch(e){
+        res.status(400).send(e)
+    }
+})
 
 module.exports = router
