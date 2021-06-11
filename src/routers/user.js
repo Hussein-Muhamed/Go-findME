@@ -17,7 +17,7 @@ const upload = multer({
     }
 })
 
-router.post('/users/me/avatar', auth , upload.single('avatar'), async (req, res)=>{
+router.post('/users/me/avatar',auth , upload.single('avatar'), async (req, res)=>{
      req.user.avatar = req.file.buffer
      await req.user.save()
     res.status(200).send()
@@ -135,5 +135,7 @@ router.patch('/users/:id', async (req, res)=>{
         res.status(400).send(e)
     }
 })
+
+// router.put('/forget-password', forgetPassword)
 
 module.exports = router

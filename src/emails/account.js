@@ -1,7 +1,7 @@
 const sgMail = require('@sendgrid/mail')
-const sendgridAPIKey = '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'
+// const sendgridAPIKey = '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'
 
-sgMail.setApiKey(sendgridAPIKey)
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 // sgMail.send({
 //     to: 'gofindmeapplication@gmail.com',

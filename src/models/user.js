@@ -46,7 +46,10 @@ const userSchema = new mongoose.Schema({
         }
     }], avatar:{
         type:Buffer,
-    } 
+    }, resetLink:{
+        data:String,
+        default:''
+    }
 },{
     timestamps:true
 })
@@ -67,7 +70,7 @@ userSchema.virtual('posts',{
 // to create auth token 
 userSchema.methods.generateAuthtoken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() },'thisismynewcourse')
+    const token = jwt.sign({ _id: user._id.toString() },process.env.JWT_SECRET_KEY)
     // res.send({user, token})
     user.tokens = user.tokens.concat({ token })
     await  user.save()
@@ -75,12 +78,12 @@ userSchema.methods.generateAuthtoken = async function () {
 }
 
 // to hash the password 
-userSchema.pre('save',async function(next) {
-    const user = this 
-    if(user.isModified('password'))
-        user.password = await bcrypt.hash(user.password, 8)
-    next()
-})
+// userSchema.pre('save',async function(next) {
+//     const user = this 
+//     if(user.isModified('password'))
+//         user.password = await bcrypt.hash(user.password, 8)
+//     next()
+// })
 
 // login check
 userSchema.statics.findByCredentials = async (email, password) =>{

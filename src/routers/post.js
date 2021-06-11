@@ -88,31 +88,7 @@ router.get('/posts', async(req, res)=>{
     
 
 })
-// get users posts
-// router.get('/posts/all', async (req, res)=>{
-//     const match = {}
-//     if(req.query.region)
-//         match.region = req.query.region
-//     if(req.query.city)
-//         match.city = req.query.city
-//     if(req.query.typeofperson)
-//         match.typeofperson = req.query.typeofperson
-//     if (req.query.gender )
-//         match.gender = req.query.gender
-//     try{
-//         await user.populate({
-//             path:'posts/all',
-//             match,
-//             options:{
-//                 limit: parseInt(req.query.limit),
-//                 skip: parseInt(req.query.skip)
-//             }
-//         }).execPopulate()
-//         res.status(200).send(posts)
-//     } catch (e){
-//         res.status(400).send(e)
-//     }
-// })
+
 
 router.get('/posts/:id', async (req, res)=>{
     try{
