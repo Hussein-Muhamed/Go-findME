@@ -3,7 +3,7 @@ const router = express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const { response } = require('express')
-// const {sendWelcomeEmail, sendCancelationEmail} = require('../emails/account')
+const {sendWelcomeEmail, sendCancelationEmail, resetPassword} = require('../emails/account')
 const multer = require('multer')
 
 const upload = multer({
@@ -56,17 +56,16 @@ router.post('/users', async (req, res)=>{
     }
 })
 
-router.post('/users/login', async (req, res)=>{
+// not working 
+router.post('/users/login',  async (req, res)=>{
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthtoken()
         res.send({user, token})
-        console.log('uncorret')
     } catch (e){
         res.status(400).send()
     }
 })
-
 
 
 // read profile
@@ -101,7 +100,7 @@ router.delete('/users/me', auth , async (req, res)=>{
 
 router.patch('/users/me', auth ,async (req, res)=>{
     const update = Object.keys(req.body)
-    const allowupdate =['fname', 'lname', 'age', 'email', 'phoneNumber','password']
+    const allowupdate =['userName', 'email', 'phoneNumber','password']
     const isValidOperation = update.every((update)=>allowupdate.includes(update))
 
     if(!isValidOperation)
@@ -136,12 +135,18 @@ router.patch('/users/:id', async (req, res)=>{
     }
 })
 
-// router.put('/forget-password', forgetPassword)
-router.post('/forgetpassowrd',auth, async (req, res)=>{
+// 3aiz ad5l l mail m4 l id 
+
+router.get('/forgetpassword/:id', async (req, res)=>{
     try{
-        const user = await User.findByIdAndUpdate(req.params.id)
-        resetPassword(user.email)
-        res.status(200).send(user)
+        const password = Math.random() * (100000000 - 100000) + 100000
+        const password2 = Math.ceil(password)
+        const user = await User.findByIdAndUpdate(req.params.id,{password:password2})
+        if(!user)
+            return res.status(404).send()
+        resetPassword(user.email, user.username, password2)
+        await user.save()
+        res.status(200).send("Please Check Your Mail, We send new password")
     } catch(e){
         res.status(400).send(e)
     }

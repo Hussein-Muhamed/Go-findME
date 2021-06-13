@@ -46,9 +46,6 @@ const userSchema = new mongoose.Schema({
         }
     }], avatar:{
         type:Buffer,
-    }, resetLink:{
-        data:String,
-        default:''
     }
 },{
     timestamps:true
@@ -90,9 +87,7 @@ userSchema.statics.findByCredentials = async (email, password) =>{
     const user = await User.findOne({email})
     if(!user) {
         throw new Error('Uncorrect email')
-        console.log('uncorrect email')
     }
-       
     const ismatch = await bcrypt.compare(password, user.password)
     if(!ismatch)
         throw new Error('Uncorrect password')

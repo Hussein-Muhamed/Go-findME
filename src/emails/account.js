@@ -1,8 +1,13 @@
 const sgMail = require('@sendgrid/mail')
-const jwt = require('jsonwebtoken')
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
+// sgMail.send({
+//     from: 'gofindmeapplication@gmail.com',
+//     to : 'gofindmeapplication@gmail.com',
+//     subject: 'hello',
+//     text: 'hi'
+// })
 const sendWelcomeEmail = (email, name) => {
     sgMail.send({
         to: email,
@@ -21,15 +26,14 @@ const sendCancelationEmail = (email, name) => {
     })
 }
 
-const resetPassword = (email, name) =>{
-    const password = Math.random() * (100000000 - 100000) + 100000
-    const password2 = Math.ceil(password)
+const resetPassword = (email, name, password2) =>{
+    
     sgMail.send({
         to:email,
         from:'gofindmeapplication@gmail.com',
-        subject:'Reset Password',
+        subject:'Reset Password !',
         html:`
-        <p>Hello${name} . <br> Welcome to Go-FindME You forrget the Password no problem. <br> Your new password is : <br>${password2}</b></p>
+        <p>Hello ${name} . <br> Welcome to Go-FindME This page to reset your password. <br> Your new password is : <br>${password2}</b></p>
         `
     }).then(() => {},error => {
         console.log(error)
