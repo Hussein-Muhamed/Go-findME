@@ -32,9 +32,9 @@ io.on("connection", function (socket) {
     console.log("Made socket disconnected");
   });
 
-  socket.on("send-notification", function (data) {
+  socket.on("send-message", function (data) {
     // io.emit("new-notification", data);
-    socket.broadcast.emit("new-notification", data)
+    socket.broadcast.emit("new-message", data)
   });
 
   socket.on("comment", (msg) => {

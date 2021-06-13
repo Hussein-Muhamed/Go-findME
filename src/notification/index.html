@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>NodeJS socket live notification demo</title>
+    <title>live notification</title>
     <meta charset="utf-8">
     <link href="/css/toastr.min.css" rel="stylesheet"/>
   </head>
@@ -36,11 +36,14 @@
     socket.on('new-notification', (resp) => {
       toastr.success(resp, 'New notification')
     });
+    socket.on('new-message', (resp) => {
+      toastr.success(resp, 'New Message')
+    });
     
     function sendMessage() {
       let msg = document.getElementById('msg').value;
       if(msg.trim() !== '') {
-        socket.emit("send-notification", msg);
+        socket.emit("send-message", msg);
       }
       
     }
