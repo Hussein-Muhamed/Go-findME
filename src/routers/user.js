@@ -137,17 +137,19 @@ router.patch('/users/:id', async (req, res)=>{
 
 // 3aiz ad5l l mail m4 l id 
 
-router.get('/forgetpassword/:id', async (req, res)=>{
+router.post('/forgetpassword', async (req, res)=>{
     try{
         const password = Math.random() * (100000000 - 100000) + 100000
         const password2 = Math.ceil(password)
-        const user = await User.findByIdAndUpdate(req.params.id,{password:password2})
+        const user = await User.findOneAndUpdate({email:req.body.email},{password:password2})
         if(!user)
             return res.status(404).send()
         resetPassword(user.email, user.username, password2)
-        await user.save()
+        // await user.save()
+        console.log(password2)
         res.status(200).send("Please Check Your Mail, We send new password")
     } catch(e){
+        console.log(e)
         res.status(400).send(e)
     }
 })
