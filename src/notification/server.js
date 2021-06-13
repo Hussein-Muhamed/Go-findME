@@ -10,10 +10,10 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cors())
 
-var server = app.listen(8081, function () {
+var server = app.listen(3000, function () {
   var host = server.address().address
   var port = server.address().port
-  console.log("Example app listening at http://%s:%s", host, port)
+  console.log("Example app listening at http://", host, port)
 });
 
 app.get('/', function (req, res) {
@@ -33,7 +33,15 @@ io.on("connection", function (socket) {
   });
 
   socket.on("send-notification", function (data) {
-    io.emit("new-notification", data);
+    // io.emit("new-notification", data);
+    socket.broadcast.emit("new-notification", data)
+  });
+
+  socket.on("comment", (msg) => {
+    socket.broadcast.emit("new-notification", msg)
+  });
+  socket.on("savePost", (msg) => {
+    socket.broadcast.emit("new-notification", msg)
   });
 
 });

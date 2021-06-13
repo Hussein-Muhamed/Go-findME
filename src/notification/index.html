@@ -9,6 +9,12 @@
  
 
   <input type="text" id="msg" /> <button type="button" onclick="sendMessage()">Send</button>
+  <br>
+  <br>
+  <button onclick="comment()">Comment</button>
+  <br>
+  <br>
+  <button onclick="savePost()">Save post</button>
   
 
   <script src="/js/jquery.min.js"></script>
@@ -17,14 +23,14 @@
   <script>
     const socket = io();
     toastr.options = {
-        timeOut: 2000,
+        timeOut: 9000,
         positionClass : 'toast-bottom-right',
         extendedTimeOut: 0,
         fadeOut: 0,
         fadeIn: 0,
         showDuration: 0,
         hideDuration: 0,
-        debug: false
+        debug: false,
     };
     
     socket.on('new-notification', (resp) => {
@@ -35,6 +41,18 @@
       let msg = document.getElementById('msg').value;
       if(msg.trim() !== '') {
         socket.emit("send-notification", msg);
+      }
+      
+    }
+    function comment() {
+      let msg1 = "Some one are commented on your post";
+      socket.emit("comment", msg1);
+      
+    }
+    function savePost() {
+      let msg = "Some one are saved your post";
+      if(msg.trim() !== '') {
+        socket.emit("savePost", msg);
       }
       
     }
