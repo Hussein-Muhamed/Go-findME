@@ -1,0 +1,7 @@
+.sideBar{
+    padding: 25px 10px;
+    flex: 0.33;
+}
+.sidebar_profile{
+    background-color: black;
+}

@@ -1,0 +1,47 @@
+.widgets{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    padding: 20px 0px;
+    margin-right: 10px;
+    max-height: 88vh;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.widget_top{
+    display: none;
+}
+.widget_topInfo{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.widget_topInfo > input{
+    width: 125px;
+    padding: 5px;
+    border-radius: 999px;
+    display: none;
+    outline-width: 0;
+}
+.widget_topInfo:hover > input{
+    display: block;
+    margin-left: 3px;
+}
+
+.widget_bottom{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    background-color: white;
+    align-items: center;
+    padding: 10px;
+    border-radius: 999px;
+}
+.widget_bottom > input{
+    border: none;
+    outline-width: 0;
+    background-color: transparent;
+    padding: 10px;
+}

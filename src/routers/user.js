@@ -73,6 +73,17 @@ router.get('/users/me', auth, async (req, res)=>{
     res.send(req.user)
 })
 
+// read all profile
+router.get('/users/profiles', async (req, res)=>{
+    try{
+      const user = await User.find({})  
+      res.status(200).send(user)
+    } 
+    catch (e){
+        res.status(500).send(e)
+    }
+})
+
 
 
 //logout

@@ -1,0 +1,9 @@
+.pro_body{
+    display: flex;
+    justify-content: center;
+}
+.profile_cover{
+    background-color: black;
+    width: 100%;
+    height: 1vh;
+}

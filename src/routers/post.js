@@ -20,7 +20,7 @@ router.post('/post', auth, upload.single('image'),  async (req, res)=>{
     
     const posts = new Post({
         ...req.body,
-        owner: req.user._id,
+        owner: req.user.userName,
         // connect to api 
         // add photo, post.id to api 
         // {
@@ -29,7 +29,7 @@ router.post('/post', auth, upload.single('image'),  async (req, res)=>{
         // }
         image: req.file.buffer
     })
-    
+
     try{
         await posts.save()
         res.status(201).send()

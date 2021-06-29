@@ -1,0 +1,107 @@
+
+.add-post {
+  height: 100vh;
+  
+}
+.add_post-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+.add_post-input > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border-radius: 20px;
+  background-color: white;
+  margin: 20px;
+}
+.add_post-input > form > .childInfo > h3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  margin: 10px;
+  font-size: x-large;
+}
+.add_post-input > form > .appearance > h3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: x-large;
+}
+.add_post-input > form > .loseDetails > h3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: x-large;
+}
+.add_post-input > form > .childInfo > input {
+  outline-width: 0;
+  border: none;
+  padding: 5px 20px;
+  margin: 5px 10px;
+  font-size: x-large;
+  background-color: #eff2f5;
+  border-radius: 999px;
+}
+.add_post-input > form > .appearance > input {
+  outline-width: 0;
+  border: none;
+  padding: 5px 20px;
+  margin: 5px 10px;
+  font-size: x-large;
+  background-color: #eff2f5;
+  border-radius: 999px;
+}
+.add_post-input > form > .hiddenSubmit{
+    display: none;
+}
+input[type="file"] {
+    width: max-content;
+    font-size: 27px;
+}
+.add_post-input > form > .loseDetails > textarea {
+  outline-width: 0;
+  border: none;
+  padding: 5px 20px;
+  margin: 5px 10px;
+  font-size: x-large;
+  background-color: #eff2f5;
+  border-radius: 15px;
+  overflow: auto;
+  width: 796px;
+  height: 273px;
+  resize: none;
+}
+.add_post-input > form > button {
+  outline-width: 0;
+  border: 1px solid black;
+  padding: 5px 20px;
+  margin: 5px 10px;
+  font-size: x-large;
+  background-color: #eff2f5;
+  border-radius: 999px;
+  transition: 1000ms ease-in-out;
+}
+.add_post-input > form > button:hover {
+  transition: 1000ms ease-in-out;
+  color: white;
+  background-color: #171f2e;
+}
+.add_post-input > form >h3{
+    color: red;
+}
