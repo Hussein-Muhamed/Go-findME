@@ -3,6 +3,11 @@
   height: 100vh;
   
 }
+.container{
+  width: 300px;
+  display: inline-block;
+  margin: 5px 0px 10px 20px;
+}
 .add_post-input {
   display: flex;
   flex-direction: column;

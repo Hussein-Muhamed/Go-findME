@@ -37,7 +37,7 @@ function Login() {
           ) {
             dispatch({
               type: actionTypes.SET_USER,
-              user: response.data.user.userNmae,
+              user: response.data.user.userName,
             });
           } else{
             setWarning("block");

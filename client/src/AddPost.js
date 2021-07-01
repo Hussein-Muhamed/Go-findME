@@ -4,22 +4,42 @@ import db, { storage } from "./firebase";
 import Header from "./Header";
 import { useStateValue } from "./StateProvider";
 import firebase from "firebase";
+import Select from "react-select";
 import Home from "./Home";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function AddPost() {
   const [input, setinput] = useState("");
   const [inputAge, setinputAge] = useState("");
-  const [inputHairColor, setinputHairColor] = useState("");
-  const [inputEyesColor, setinputEyesColor] = useState("");
-  const [inputSkinColor, setinputSkinColor] = useState("");
-  const [inputMessage, setinputMessage] = useState("");
+  const [inputCity, setinputCity] = useState("");
+  const [inputRegion, setinputRegion] = useState("");
+  const [inputGender, setinputGender] = useState("");
+  const [inputDescription, setinputDescription] = useState("");
+  const [date, setDate] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState(false);
   const [url, setUrl] = useState("");
   const [{ user }, dispatch] = useStateValue();
 
-  var arr = ["white","black"];
+  var arr = ["white", "black"];
+  const age = [
+    { label: "Child", value: "Child" },
+    { label: "Adult", value: "Adult" },
+    { label: "Elder", value: "Elder" },
+  ];
+  const gender = [
+    { label: "Male", value: 1 },
+    { label: "Female", value: 2 },
+  ];
+  const city = [
+    { label: "Cairo", value: 1 },
+    { label: "Alex", value: 2 },
+  ];
+  const region = [
+    { label: "Ain-Shams", value: 1 },
+    { label: "Masr-Al-Gadeda", value: 2 },
+  ];
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -33,23 +53,26 @@ function AddPost() {
         alert("Image not uploaded!");
         e.preventDefault();
       } else {
-        const uploadTask = storage.ref(`images/${image.name}`).put(image);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {},
-          (error) => {
-            console.log(error);
-          },
-          () => {
-            storage
-              .ref("images")
-              .child(image.name)
-              .getDownloadURL()
-              .then((url) => {
-                setUrl(url);
-              });
-          }
+        alert(
+          "1) Make Sure That The Photo is Clear \n 2) The Photo Cannot be rotated \n 3) The Face must be appeared clearly"
         );
+        // const uploadTask = storage.ref(`images/${image.name}`).put(image);
+        // uploadTask.on(
+        //   "state_changed",
+        //   (snapshot) => {},
+        //   (error) => {
+        //     console.log(error);
+        //   },
+        //   () => {
+        //     storage
+        //       .ref("images")
+        //       .child(image.name)
+        //       .getDownloadURL()
+        //       .then((url) => {
+        //         setUrl(url);
+        //       });
+        //   }
+        // );
       }
     }, 1000);
   };
@@ -58,58 +81,92 @@ function AddPost() {
       alert("Press on Upload Button First!");
       e.preventDefault();
     } else if (
-      (input == "" ||
-      inputHairColor == "" ||
-      inputEyesColor == "" ||
-      inputSkinColor == "" ||
+      input == "" ||
+      inputCity == "" ||
+      inputRegion == "" ||
+      inputGender == "" ||
       inputAge == "" ||
       parseInt(input) >= 0 ||
       isNaN(parseInt(input)) == false ||
       input.match(new RegExp("[0-9]")) !== null ||
       parseInt(input) < 0 ||
-      parseInt(input) >= 0 ||
-      parseInt(inputAge) <= 0 ||
-      inputHairColor.match(new RegExp("[0-9]")) !== null ||
-      inputEyesColor.match(new RegExp("[0-9]")) !== null ||
-      inputSkinColor.match(new RegExp("[0-9]")) !== null) ||
-      inputSkinColor.match(new RegExp("white|black")) == null
-      
+      parseInt(input) >= 0
+      // parseInt(inputAge) <= 0 ||
+      // inputHairColor.match(new RegExp("[0-9]")) !== null ||
+      // inputEyesColor.match(new RegExp("[0-9]")) !== null ||
+      // inputSkinColor.match(new RegExp("[0-9]")) !== null ||
+      // inputSkinColor.match(new RegExp("white|black")) == null
     ) {
       e.preventDefault();
-      console.log(inputSkinColor.match(new RegExp("word1|word2")));
-      
+
       console.log("error");
-    } else {
+    } 
+    else {
+      // db.collection("posts").add({
+      //   message:
+      //     "Name: " +
+      //     input +
+      //     " Age: " +
+      //     inputAge +
+      //     " Hair Color: " +
+      //     inputHairColor +
+      //     " Eyes Color:  " +
+      //     inputEyesColor +
+      //     " Skin Color: " +
+      //     inputSkinColor.toLowerCase() +
+      //     "  |  " +
+      //     inputMessage,
+      //   timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+      //   profilePic: user.photoURL,
+      //   userName: user.displayName,
+      //   image: url,
+      // });
+
+      const check = {
+        name: input,
+        age: inputAge,
+        city: inputCity,
+        gender: inputGender,
+        region: inputRegion,
+        date: date,
+        image: image,
+      };
       e.preventDefault();
-      db.collection("posts").add({
-        message:
-          "Name: " +
-          input +
-          " Age: " +
-          inputAge +
-          " Hair Color: " +
-          inputHairColor +
-          " Eyes Color:  " +
-          inputEyesColor +
-          " Skin Color: " +
-          inputSkinColor.toLowerCase() +
-          "  |  " +
-          inputMessage,
-        timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-        profilePic: user.photoURL,
-        userName: user.displayName,
-        image: url,
-      });
+      axios
+        .post("http://localhost:3000/post", check)
+        .then((response) => {
+          console.log(response.data);
+
+          // console.log(response.data.user.userName);
+          // if (
+          //   user == response.data.user.email &&
+          //   user1 == response.data.user.password
+          // ) {
+          //   dispatch({
+          //     type: actionTypes.SET_USER,
+          //     user: response.data.user.userName,
+          //   });
+          // } else{
+          //   setWarning("block");
+          // }
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
       setinputAge("");
       setinput("");
       setImageUrl("");
-      setinputHairColor("");
-      setinputEyesColor("");
-      setinputSkinColor("");
-      setinputMessage("");
+      setinputCity("");
+      setinputRegion("");
+      setinputGender("");
+      setinputDescription("");
       alert("Uploaded!");
     }
   };
+  function changeHandler(e) {
+    console.log(e.value);
+  }
   return (
     <div className="add-post">
       <Header />
@@ -121,53 +178,92 @@ function AddPost() {
             <input
               value={input}
               onChange={(e) => {
-                setinput(e.target.value);
+                setinput(e.value);
               }}
               className="messageSender_input"
               placeholder={`what is Child Name ?`}
             ></input>
-            <input
-              value={inputAge}
-              onChange={(e) => {
-                setinputAge(e.target.value);
-              }}
-              className="messageSender_input"
-              placeholder={`what is Child Age ?`}
-            ></input>
+
+            <div className="container">
+              <div className="row">
+                <div className="col-md-4"></div>
+                <div className="col-md-4">
+                  <Select
+                    value={inputAge}
+                    onChange={changeHandler}
+                    placeholder="Age"
+                    options={age}
+                  />
+                </div>
+                <div className="col-md-4"></div>
+              </div>
+            </div>
           </div>
           <div className="appearance">
-            <h3>Child Appearance</h3>
+            <h3>Information</h3>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-4"></div>
+                <div className="col-md-4">
+                  <Select
+                    value={inputCity}
+                    onChange={(e) => {
+                      setinputCity(e.value);
+                    }}
+                    placeholder="City"
+                    options={city}
+                  />
+                </div>
+                <div className="col-md-4"></div>
+              </div>
+            </div>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-4"></div>
+                <div className="col-md-4">
+                  <Select
+                    value={inputRegion}
+                    onChange={(e) => {
+                      setinputRegion(e.value);
+                    }}
+                    placeholder="Region"
+                    options={region}
+                  />
+                </div>
+                <div className="col-md-4"></div>
+              </div>
+            </div>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-4"></div>
+                <div className="col-md-4">
+                  <Select
+                    value={inputGender}
+                    onChange={(e) => {
+                      setinputGender(e.value);
+                    }}
+                    placeholder="Gender"
+                    options={gender}
+                  />
+                </div>
+                <div className="col-md-4"></div>
+              </div>
+            </div>
             <input
-              value={inputHairColor}
+              type="date"
+              value={date}
               onChange={(e) => {
-                setinputHairColor(e.target.value);
-              }}
-              className="messageSender_input"
-              placeholder={`what is Child Hair Color ?`}
-            ></input>
-            <input
-              value={inputEyesColor}
-              onChange={(e) => {
-                setinputEyesColor(e.target.value);
-              }}
-              className="messageSender_input"
-              placeholder={`what is Child Eyes Color ?`}
-            ></input>
-            <input
-              value={inputSkinColor}
-              onChange={(e) => {
-                setinputSkinColor(e.target.value);
+                setDate(e.value);
               }}
               className="messageSender_input messageSender_input_color"
-              placeholder={`Skin Color ? (white / black)`}
             ></input>
           </div>
           <div className="loseDetails">
-            <h3>Your Message</h3>
+            <h3>Description</h3>
             <textarea
-              value={inputMessage}
+              value={inputDescription}
               onChange={(e) => {
-                setinputMessage(e.target.value);
+                setinputDescription(e.target.value);
               }}
               className="messageSender_input"
               placeholder={`Please Type a message that explain how the child was lost/found ?`}

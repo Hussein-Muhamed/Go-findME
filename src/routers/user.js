@@ -56,7 +56,34 @@ router.post('/users', async (req, res)=>{
     }
 })
 
-// not working 
+
+
+router.post('/forgetpassword', async (req, res)=>{
+    try{
+    const rnumber = Math.random() * (100000000 - 100000) + 100000
+    const password2 = Math.ceil(rnumber)
+    const user = await User.findOneAndUpdate({email:req.body.email},{password:password2})
+    if(!user)
+        return res.status(404).send()
+        resetPassword(user.email, user.username, password2)
+    // await user.save()
+        console.log(password2)
+        res.status(200).send("Please Check Your Mail, We send new Password to you")
+    } catch(e){
+        console.log(e)
+        res.status(400).send(e)
+    }
+})
+
+// router.get('/user/resetpassword/checkcode', async (req, res)=>{
+//     try{
+//        console.log(verification_code)
+//     } catch (e){
+//         res.status(500)
+//     }
+// })
+
+
 router.post('/users/login',  async (req, res)=>{
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -146,23 +173,7 @@ router.patch('/users/:id', async (req, res)=>{
     }
 })
 
-// 3aiz ad5l l mail m4 l id 
 
-router.post('/forgetpassword', async (req, res)=>{
-    try{
-        const password = Math.random() * (100000000 - 100000) + 100000
-        const password2 = Math.ceil(password)
-        const user = await User.findOneAndUpdate({email:req.body.email},{password:password2})
-        if(!user)
-            return res.status(404).send()
-        resetPassword(user.email, user.username, password2)
-        // await user.save()
-        console.log(password2)
-        res.status(200).send("Please Check Your Mail, We send new password")
-    } catch(e){
-        console.log(e)
-        res.status(400).send(e)
-    }
-})
+ 
 
 module.exports = router
