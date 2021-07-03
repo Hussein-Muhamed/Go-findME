@@ -37,8 +37,10 @@ function Login() {
           ) {
             dispatch({
               type: actionTypes.SET_USER,
-              user: response.data.user.userName,
+              user: response.data.user,
             });
+            localStorage.setItem('user', JSON.stringify(response.data));
+
           } else{
             setWarning("block");
           }

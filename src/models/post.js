@@ -13,7 +13,7 @@ const postSchema = new mongoose.Schema({
     ,date:{
         type: String,
         lastActiveAt: Date,
-        required: true,
+        required: false,
     }, typeofperson :{
         type:String,
         required: true,
@@ -31,10 +31,11 @@ const postSchema = new mongoose.Schema({
     }, owner:{
         // type:mongoose.Schema.Types.ObjectID,
         type:String,
-        required:true,
+        required:false,
         ref:'User'
-    }, image:{
-        type:Buffer,
+    }
+    , image:{
+        type:String,
     }
 }, {
     timestamps: true

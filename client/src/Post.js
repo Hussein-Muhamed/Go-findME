@@ -6,7 +6,7 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import NearMeIcon from '@material-ui/icons/NearMe';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
-
+import moment from 'moment'
 function Post({ profilePic, userName, timeStamp, message, image }) {
   return (
     <div className="post">
@@ -14,7 +14,7 @@ function Post({ profilePic, userName, timeStamp, message, image }) {
         <Avatar src={profilePic} className="post_avatar" />
         <div className="post_info">
             <h3>{userName}</h3>
-            <p>{new Date(timeStamp?.toDate()).toUTCString()}</p>
+            <p>{moment(timeStamp).format('MMMM Do YYYY, h:mm:ss a')}</p>
         </div>
       </div>
       <div className="post_bottom">

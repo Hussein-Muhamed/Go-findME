@@ -3,32 +3,59 @@ const Post = require('../models/post')
 const router = express.Router()
 const auth = require('../middleware/auth')
 const multer = require('multer')
+const { upload, deleteImage } = require("../utils/index");
+const axios = require('axios')
+const fs = require('fs')
+const request = require('request')
+const path = require('path')
+// const upload = multer({
+//     limits:{
+//         fileSize:5000000
+//     },
+//     fileFilter(req,file, cb){
+//         if (!file.originalname.match(/\.(jpg|png|jpeg)$/))
+//             return cb(new Error ('please upload image'))
+//         cb(undefined, true)
+//     }
+// })
 
-const upload = multer({
-    limits:{
-        fileSize:5000000
-    },
-    fileFilter(req,file, cb){
-        if (!file.originalname.match(/\.(jpg|png|jpeg)$/))
-            return cb(new Error ('please upload image'))
-        cb(undefined, true)
-    }
-})
-
-router.post('/post', auth, upload.single('image'),  async (req, res)=>{
+router.post('/post', auth , upload ,  async (req, res)=>{
     // const posts = await new Post(req.body)
-    
+    var img = req.file.path.replace(`src\\public\\`, '');
     const posts = new Post({
         ...req.body,
+        image:img,
         owner: req.user.userName,
-        // connect to api 
-        // add photo, post.id to api 
-        // {
-        //     image:binary,
-        //     name: post.id
-        // }
-        image: req.file.buffer
-    })
+    //     // connect to api 
+    //     // add photo, post.id to api 
+    //     // {
+    //     //     image:req.file.path,
+    //     //     name: post.id
+    //     // }
+    //     // image: req.file.buffer
+     })
+
+     const imagepath = req.file.path.replace("src","")
+     var rootsrc = path.dirname(require.main.filename || process.mainModule.filename);
+     var filePath = rootsrc + imagepath;
+        
+     const options = {
+            method: "POST",
+            url: `http://192.168.1.2:8080/api/filesys/add/image/?pid=${posts.id}`,
+            port: 443,
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            formData : {
+                "file" : fs.createReadStream(filePath)
+            }
+        };
+        
+        request(options, function (err, res, body) {
+            if(err) console.log(err);
+            console.log(body);
+        });
+    // console.log(req.file.path)
 
     try{
         await posts.save()

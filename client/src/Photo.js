@@ -2,6 +2,7 @@ import React from "react";
 import "./Photo.css";
 import { useStateValue } from "./StateProvider";
 import CoverPic from './images/hannah.png'
+import Avatar1 from './images/avatar1.png'
 
 function Photo(props) {
   const [{ user }, dispatch] = useStateValue();
@@ -11,8 +12,8 @@ function Photo(props) {
           <img src={CoverPic} />
       </div>
       <div className="profile_photo">
-        <img src={user.photoURL} />
-        <h3>{user.displayName}</h3>
+        <img src={user.avatar? user.avatar:Avatar1} />
+        <h3>{user.userName}</h3>
       </div>
     </div>
   );

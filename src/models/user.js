@@ -39,7 +39,10 @@ const userSchema = new mongoose.Schema({
     },gender:{
         type:String,
         require: true,
-    },tokens:[{
+    }, avatar:{
+        type:String,
+        default:null,
+    }, tokens:[{
         token:{
             type: String,
             required: true,

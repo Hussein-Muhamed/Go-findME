@@ -8,6 +8,7 @@ import Select from "react-select";
 import Home from "./Home";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import FileBase64 from "react-file-base64" 
 
 function AddPost() {
   const [input, setinput] = useState("");
@@ -17,6 +18,8 @@ function AddPost() {
   const [inputGender, setinputGender] = useState("");
   const [inputDescription, setinputDescription] = useState("");
   const [date, setDate] = useState("");
+  const [type, setType] = useState("");
+
   const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState(false);
   const [url, setUrl] = useState("");
@@ -29,34 +32,72 @@ function AddPost() {
     { label: "Elder", value: "Elder" },
   ];
   const gender = [
-    { label: "Male", value: 1 },
-    { label: "Female", value: 2 },
+    { label: "Male", value: "Male" },
+    { label: "Female", value: "Female" },
+  ];
+  const missed = [
+    { label: "Missed", value: "Missed" },
+    { label: "Found", value: "Found" },
   ];
   const city = [
-    { label: "Cairo", value: 1 },
-    { label: "Alex", value: 2 },
+    { label: "Cairo", value: "Cairo" },
+    { label: "Alex", value: "Alex" },
   ];
   const region = [
-    { label: "Ain-Shams", value: 1 },
-    { label: "Masr-Al-Gadeda", value: 2 },
+    { label: "Ain-Shams", value: "Ain-Shams" },
+    { label: "Masr-Al-Gadeda", value: "Masr-Al-Gadeda" },
   ];
   const handleChange = (e) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      localStorage.setItem("image", reader.result);
+    });
+    setImage(reader.readAsDataURL(e.target.files[0]));
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
+      console.log("Image: ", image);
     }
+    console.log("Image: ", image);
   };
-  console.log("Image: ", image);
-  const handleUpload = (e) => {
-    e.preventDefault();
-    setTimeout(function () {
-      if (image == false) {
-        alert("Image not uploaded!");
-        e.preventDefault();
-      } else {
-        alert(
-          "1) Make Sure That The Photo is Clear \n 2) The Photo Cannot be rotated \n 3) The Face must be appeared clearly"
-        );
-        // const uploadTask = storage.ref(`images/${image.name}`).put(image);
+  
+  // const handleChange = (e) => {
+  //   if (e.target.files[0]) {
+  //     setImage(e.target.files[0]);
+  //   }
+  // };
+  // console.log("Image: ", image);
+  // const handleUpload = (e) => {
+  //   e.preventDefault();
+  //   setTimeout(function () {
+  //     if (image == false) {
+  //       alert("Image not uploaded!");
+  //       e.preventDefault();
+  //     } else {
+  //       alert(
+  //         "1) Make Sure That The Photo is Clear \n 2) The Photo Cannot be rotated \n 3) The Face must be appeared clearly"
+  //       );
+  //       const check = {
+  //         // name: input,
+  //         // age: inputAge,
+  //         // city: inputCity,
+  //         // gender: inputGender,
+  //         // region: inputRegion,
+  //         // date: date,
+  //         // description: inputDescription,
+  //         // typeofperson: type,
+  //         image: image,
+  //       };
+  //       e.preventDefault();
+  //       axios
+  //         .post("http://localhost:3000/post", check)
+  //         .then((response) => {
+  //           console.log(response);
+  //         })
+  //         .catch(function (error) {
+  //           // handle error
+  //           console.log(error);
+  //         });
+  //       // const uploadTask = storage.ref(`images/${image.name}`).put(image);
         // uploadTask.on(
         //   "state_changed",
         //   (snapshot) => {},
@@ -73,14 +114,15 @@ function AddPost() {
         //       });
         //   }
         // );
-      }
-    }, 1000);
-  };
+  //     }
+  //   }, 1000);
+  // };
   const handleSubmit = (e) => {
-    if (url == "") {
-      alert("Press on Upload Button First!");
-      e.preventDefault();
-    } else if (
+    // if (url == "") {
+    //   alert("Press on Upload Button First!");
+    //   e.preventDefault();
+    // } 
+     if (
       input == "" ||
       inputCity == "" ||
       inputRegion == "" ||
@@ -98,62 +140,56 @@ function AddPost() {
       // inputSkinColor.match(new RegExp("white|black")) == null
     ) {
       e.preventDefault();
-
       console.log("error");
-    } 
-    else {
-      // db.collection("posts").add({
-      //   message:
-      //     "Name: " +
-      //     input +
-      //     " Age: " +
-      //     inputAge +
-      //     " Hair Color: " +
-      //     inputHairColor +
-      //     " Eyes Color:  " +
-      //     inputEyesColor +
-      //     " Skin Color: " +
-      //     inputSkinColor.toLowerCase() +
-      //     "  |  " +
-      //     inputMessage,
-      //   timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-      //   profilePic: user.photoURL,
-      //   userName: user.displayName,
-      //   image: url,
-      // });
+    } else {
+      var bodyFormData = new FormData();
 
-      const check = {
-        name: input,
-        age: inputAge,
-        city: inputCity,
-        gender: inputGender,
-        region: inputRegion,
-        date: date,
-        image: image,
-      };
-      e.preventDefault();
-      axios
-        .post("http://localhost:3000/post", check)
-        .then((response) => {
-          console.log(response.data);
-
-          // console.log(response.data.user.userName);
-          // if (
-          //   user == response.data.user.email &&
-          //   user1 == response.data.user.password
-          // ) {
-          //   dispatch({
-          //     type: actionTypes.SET_USER,
-          //     user: response.data.user.userName,
-          //   });
-          // } else{
-          //   setWarning("block");
-          // }
+      bodyFormData.append('name', input);
+      bodyFormData.append('age', inputAge);
+      bodyFormData.append('city', inputCity);
+      bodyFormData.append('gender', inputGender);
+      bodyFormData.append('region', inputRegion);
+      bodyFormData.append('typeofperson', type);
+      bodyFormData.append('description', inputDescription);
+      bodyFormData.append('date', date);
+      bodyFormData.append('image', image);
+      axios({
+        method: "post",
+        url: "http://localhost:3000/post",
+        data: bodyFormData,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then(function (response) {
+          //handle success
+          console.log(response);
         })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
+        .catch(function (response) {
+          //handle error
+          console.log(response);
         });
+      e.preventDefault();
+      // axios
+      //   .post("http://localhost:3000/post",check)
+      //   .then((response) => {
+      //     console.log(response);
+
+      //     // console.log(response.data.user.userName);
+      //     // if (
+      //     //   user == response.data.user.email &&
+      //     //   user1 == response.data.user.password
+      //     // ) {
+      //     //   dispatch({
+      //     //     type: actionTypes.SET_USER,
+      //     //     user: response.data.user.userName,
+      //     //   });
+      //     // } else{
+      //     //   setWarning("block");
+      //     // }
+      //   })
+      //   .catch(function (error) {
+      //     // handle error
+      //     console.log(error);
+      //   });
       setinputAge("");
       setinput("");
       setImageUrl("");
@@ -165,6 +201,7 @@ function AddPost() {
     }
   };
   function changeHandler(e) {
+    setinputAge(e.value);
     console.log(e.value);
   }
   return (
@@ -178,10 +215,10 @@ function AddPost() {
             <input
               value={input}
               onChange={(e) => {
-                setinput(e.value);
+                setinput(e.target.value);
               }}
               className="messageSender_input"
-              placeholder={`what is Child Name ?`}
+              placeholder={`Name`}
             ></input>
 
             <div className="container">
@@ -242,8 +279,24 @@ function AddPost() {
                     onChange={(e) => {
                       setinputGender(e.value);
                     }}
-                    placeholder="Gender"
+                    placeholder={inputGender ? inputGender : "select gender"}
                     options={gender}
+                  />
+                </div>
+                <div className="col-md-4"></div>
+              </div>
+            </div>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-4"></div>
+                <div className="col-md-4">
+                  <Select
+                    value={type}
+                    onChange={(e) => {
+                      setType(e.value);
+                    }}
+                    placeholder="Type"
+                    options={missed}
                   />
                 </div>
                 <div className="col-md-4"></div>
@@ -253,7 +306,7 @@ function AddPost() {
               type="date"
               value={date}
               onChange={(e) => {
-                setDate(e.value);
+                setDate(e.target.value);
               }}
               className="messageSender_input messageSender_input_color"
             ></input>
@@ -278,9 +331,12 @@ function AddPost() {
             placeholder="image URL (Optional)"
           ></input>
           <input type="file" onChange={handleChange} />
+          {/* <FileBase64 onDone={({base64}) =>{
+            setImage(base64)
+          }}/> */}
           <h3>**Press on "Upload" button before "Add Post"**</h3>
-          <button onClick={handleUpload}>Upload</button>
-          <button onClick={(handleUpload, handleSubmit)}>Add Post</button>
+          {/* <button onClick={handleUpload}>Upload</button> */}
+          <button onClick={(handleSubmit)}>Add Post</button>
         </form>
       </div>
     </div>
@@ -288,3 +344,6 @@ function AddPost() {
 }
 
 export default AddPost;
+
+// {"file":imagefile}
+// {}
