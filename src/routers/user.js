@@ -16,7 +16,7 @@ const upload = multer({
         cb(undefined, true)
     }
 })
-
+// uplod user photo
 router.post('/users/me/avatar',auth , upload.single('avatar'), async (req, res)=>{
      req.user.avatar = req.file.buffer
      await req.user.save()
@@ -24,13 +24,13 @@ router.post('/users/me/avatar',auth , upload.single('avatar'), async (req, res)=
 }, (error, req, res, next)=>{
     res.status(400).send({error:error.message})
 })
-
+// delet user photo
 router.delete('/users/me/avatar',auth , async (req, res)=>{
     req.user.avatar = undefined
     await req.user.save()
     res.send()
 })
-
+//show user photo
 router.get('/users/:id/avatar',async (req, res)=>{
     try{
         const user = await User.findById(req.params.id)
@@ -44,6 +44,17 @@ router.get('/users/:id/avatar',async (req, res)=>{
     }
 })
 
+// not worked
+router.post('/users/usrename', async(req, res)=>{
+    try{
+        const users = await User.findOne({userName: req.body })
+        res.status(200).send(users)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+//create user 
 router.post('/users', async (req, res)=>{
     const user =  new User(req.body)
     try{
@@ -57,7 +68,7 @@ router.post('/users', async (req, res)=>{
 })
 
 
-
+// forget password
 router.post('/forgetpassword', async (req, res)=>{
     try{
     const rnumber = Math.random() * (100000000 - 100000) + 100000
@@ -75,15 +86,8 @@ router.post('/forgetpassword', async (req, res)=>{
     }
 })
 
-// router.get('/user/resetpassword/checkcode', async (req, res)=>{
-//     try{
-//        console.log(verification_code)
-//     } catch (e){
-//         res.status(500)
-//     }
-// })
 
-
+// login 
 router.post('/users/login',  async (req, res)=>{
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -111,8 +115,6 @@ router.get('/users/profiles', async (req, res)=>{
     }
 })
 
-
-
 //logout
 router.post('/users/logout', auth , async (req, res)=>{
     try{
@@ -125,7 +127,7 @@ router.post('/users/logout', auth , async (req, res)=>{
         res.status(500).send() 
     }
 })
-
+// delete account 
 router.delete('/users/me', auth , async (req, res)=>{
     try{
        const user = await req.user.remove()
@@ -135,7 +137,7 @@ router.delete('/users/me', auth , async (req, res)=>{
         res.status(400).send(e)
     }
 })
-
+// update information 
 router.patch('/users/me', auth ,async (req, res)=>{
     const update = Object.keys(req.body)
     const allowupdate =['userName', 'email', 'phoneNumber','password']
@@ -172,8 +174,5 @@ router.patch('/users/:id', async (req, res)=>{
         res.status(400).send(e)
     }
 })
-
-
- 
 
 module.exports = router

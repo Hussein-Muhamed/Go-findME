@@ -25,6 +25,7 @@ function Login() {
   };
   const signUp2 = (e) => {
     // alert('A name was submitted: ' + this.state.email + this.state.password);
+    
     const check = { email: user, password: user1 }
     e.preventDefault();
     axios
@@ -40,6 +41,7 @@ function Login() {
               user: response.data.user,
             });
             localStorage.setItem('user', JSON.stringify(response.data));
+            localStorage.setItem('token', response.data.token);
 
           } else{
             setWarning("block");
@@ -50,6 +52,41 @@ function Login() {
         console.log(error);
       });
   };
+  //   e.preventDefault();
+  //   axios
+  //     .post("http://localhost:3000/users/login", {
+  //        email: user,
+  //       password: user1
+  //      })
+  //     .then((response) => {
+  //       console.log(response);
+  //         if (
+  //           user == response.data.user.email &&
+  //           user1 == response.data.user.password
+  //         ) {
+  //           dispatch({
+  //             type: actionTypes.SET_USER,
+  //             user: response.data.user,
+  //           });
+  //           localStorage.setItem('token', response.data.token);
+
+  //         } else{
+  //           setWarning("block");
+  //         }
+  //         // response.json().then((result)=>{
+  //         //   console.log("result", result)
+  //         //   localStorage.setItem('login',JSON.stringify({
+  //         //   login:true,
+  //         //   token:result.token
+  //         // }))
+  //         // })
+          
+  //       })
+  //     .catch(function (error) {
+  //       // handle error
+  //       console.log(error);
+  //     });
+  // };
   const signIn = () => {
     auth
       .signInWithPopup(provider)

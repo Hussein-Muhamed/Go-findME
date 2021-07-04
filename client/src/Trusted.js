@@ -7,7 +7,7 @@ function Trusted() {
     <>
       <Header />
       <div className="trusted">
-
+        
       </div>
     </>
   );

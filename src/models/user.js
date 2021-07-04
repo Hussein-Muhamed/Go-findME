@@ -42,12 +42,14 @@ const userSchema = new mongoose.Schema({
     }, avatar:{
         type:String,
         default:null,
-    }, tokens:[{
+    },
+     tokens:[{
         token:{
             type: String,
             required: true,
         }
-    }], avatar:{
+    }],
+    avatar:{
         type:Buffer,
     }
 },{

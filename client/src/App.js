@@ -7,6 +7,10 @@ import Profile from "./Profile";
 import AddPost from "./AddPost";
 import Location from "./Location";
 import Signup from "./Signup";
+import Trusted from "./Trusted";
+import Settings from "./Settings";
+import Messages from "./Messages";
+
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
@@ -34,6 +38,15 @@ function App() {
             </Route>
             <Route path="/location">
               <Location />
+            </Route>
+            <Route path="/trusted">
+              <Trusted />
+            </Route>
+            <Route path="/settings">
+              <Settings />
+            </Route>
+            <Route path="/messages">
+              <Messages />
             </Route>
           </div>
         </>

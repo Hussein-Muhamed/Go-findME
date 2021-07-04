@@ -1,0 +1,116 @@
+
+.messages {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(233, 237, 241);
+  overflow: hidden;
+}
+.leftSide {
+  height: 91vh;
+  background-color: #fff;
+  margin: 10px 0 0 10px;
+  border-radius: 10px;
+}
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  width: 83%;
+
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+}
+.chatViewer {
+  flex: 1;
+  background-color: #fff;
+  width: 98%;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: -6px 7px 10px -9px rgba(0, 0, 0, 0.75);
+}
+.messageSender {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  align-items: center;
+  padding: 10px;
+  box-shadow: -6px 7px 10px -9px rgba(0, 0, 0, 0.75);
+  width: 99%;
+}
+.messageSender > input {
+  border: none;
+  outline-width: 0;
+  width: 95%;
+  color: black;
+  background-color: transparent;
+  font-size: larger;
+  padding: 10px;
+}
+.messageSender > input::placeholder {
+  color: rgb(65, 60, 60);
+}
+.messageSender > .send-btn .MuiSvgIcon-root {
+  color: rgb(241, 235, 235);
+  padding: 10px;
+  margin-left: 12px;
+  background-color: rgb(76, 202, 76);
+  border-radius: 50%;
+  transition: 500ms ease-in-out;
+}
+.messageSender > .send-btn  .MuiSvgIcon-root:hover {
+  box-shadow: -5px 0px 10px -9px rgba(0, 0, 0, 0.75);
+  transition: 500ms ease-in-out;
+  cursor: pointer;
+}
+.messageSender > .send-btn {
+    background-color: transparent;
+}
+.userInfo {
+  display: flex;
+  padding: 7px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgb(133, 130, 130);
+}
+.userInfo > label {
+  margin-left: 10px;
+  font-size: medium;
+  font-weight: 600;
+}
+.chatViewer-message{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+.chatViewer-message > .send{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: flex-end;
+    margin-right: 15%;
+}
+.chatViewer-message > .send > .send{
+    background-color: rgb(0, 162, 255);
+    color: white;
+    border-radius: 7px 7px 0px 7px ;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.chatViewer-message > .recieve{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: flex-start;
+    margin-left: 13%;
+}
+.chatViewer-message > .recieve > .recieve{
+    background-color: rgb(0, 162, 255);
+    color: white;
+    border-radius: 7px 7px 7px 0px ;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}

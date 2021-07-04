@@ -9,15 +9,11 @@ import db from "./firebase";
 import Photo from "./Photo";
 import axios from "axios";
 
+
 function Feed(props) {
   const [posts, setPosts] = useState([]);
-  useEffect(() => {
+  {useEffect(() => {
     fetchData();
-    // db.collection("posts")
-    //   .orderBy("timeStamp", "desc")
-    //   .onSnapshot((snapshot) =>
-    //     setPosts(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
-    //   );
   }, []);
   const fetchData = () => {
     axios
@@ -31,7 +27,7 @@ function Feed(props) {
       // handle error
       console.log(error);
     });
-  }
+  }}
   return (
     <div className={`fee${props.cName}`}>
       <Photo cName={props.name} />

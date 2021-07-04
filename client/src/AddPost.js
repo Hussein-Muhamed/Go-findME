@@ -8,7 +8,7 @@ import Select from "react-select";
 import Home from "./Home";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import FileBase64 from "react-file-base64" 
+import jwt from "jwt-decode";
 
 function AddPost() {
   const [input, setinput] = useState("");
@@ -19,7 +19,6 @@ function AddPost() {
   const [inputDescription, setinputDescription] = useState("");
   const [date, setDate] = useState("");
   const [type, setType] = useState("");
-
   const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState(false);
   const [url, setUrl] = useState("");
@@ -47,6 +46,7 @@ function AddPost() {
     { label: "Ain-Shams", value: "Ain-Shams" },
     { label: "Masr-Al-Gadeda", value: "Masr-Al-Gadeda" },
   ];
+
   const handleChange = (e) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => {
@@ -59,69 +59,11 @@ function AddPost() {
     }
     console.log("Image: ", image);
   };
-  
-  // const handleChange = (e) => {
-  //   if (e.target.files[0]) {
-  //     setImage(e.target.files[0]);
-  //   }
-  // };
-  // console.log("Image: ", image);
-  // const handleUpload = (e) => {
-  //   e.preventDefault();
-  //   setTimeout(function () {
-  //     if (image == false) {
-  //       alert("Image not uploaded!");
-  //       e.preventDefault();
-  //     } else {
-  //       alert(
-  //         "1) Make Sure That The Photo is Clear \n 2) The Photo Cannot be rotated \n 3) The Face must be appeared clearly"
-  //       );
-  //       const check = {
-  //         // name: input,
-  //         // age: inputAge,
-  //         // city: inputCity,
-  //         // gender: inputGender,
-  //         // region: inputRegion,
-  //         // date: date,
-  //         // description: inputDescription,
-  //         // typeofperson: type,
-  //         image: image,
-  //       };
-  //       e.preventDefault();
-  //       axios
-  //         .post("http://localhost:3000/post", check)
-  //         .then((response) => {
-  //           console.log(response);
-  //         })
-  //         .catch(function (error) {
-  //           // handle error
-  //           console.log(error);
-  //         });
-  //       // const uploadTask = storage.ref(`images/${image.name}`).put(image);
-        // uploadTask.on(
-        //   "state_changed",
-        //   (snapshot) => {},
-        //   (error) => {
-        //     console.log(error);
-        //   },
-        //   () => {
-        //     storage
-        //       .ref("images")
-        //       .child(image.name)
-        //       .getDownloadURL()
-        //       .then((url) => {
-        //         setUrl(url);
-        //       });
-        //   }
-        // );
-  //     }
-  //   }, 1000);
-  // };
+  // const handleSubmit = (e) => {
+  //   var bodyFormData = new FormData();
+  //   bodyFormData.append('image', image);
+  // }
   const handleSubmit = (e) => {
-    // if (url == "") {
-    //   alert("Press on Upload Button First!");
-    //   e.preventDefault();
-    // } 
      if (
       input == "" ||
       inputCity == "" ||
@@ -133,17 +75,11 @@ function AddPost() {
       input.match(new RegExp("[0-9]")) !== null ||
       parseInt(input) < 0 ||
       parseInt(input) >= 0
-      // parseInt(inputAge) <= 0 ||
-      // inputHairColor.match(new RegExp("[0-9]")) !== null ||
-      // inputEyesColor.match(new RegExp("[0-9]")) !== null ||
-      // inputSkinColor.match(new RegExp("[0-9]")) !== null ||
-      // inputSkinColor.match(new RegExp("white|black")) == null
     ) {
       e.preventDefault();
       console.log("error");
     } else {
       var bodyFormData = new FormData();
-
       bodyFormData.append('name', input);
       bodyFormData.append('age', inputAge);
       bodyFormData.append('city', inputCity);
@@ -157,39 +93,17 @@ function AddPost() {
         method: "post",
         url: "http://localhost:3000/post",
         data: bodyFormData,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data",
+        "Authorization" : localStorage.getItem('token'),
+      },
       })
         .then(function (response) {
-          //handle success
           console.log(response);
         })
         .catch(function (response) {
-          //handle error
           console.log(response);
         });
       e.preventDefault();
-      // axios
-      //   .post("http://localhost:3000/post",check)
-      //   .then((response) => {
-      //     console.log(response);
-
-      //     // console.log(response.data.user.userName);
-      //     // if (
-      //     //   user == response.data.user.email &&
-      //     //   user1 == response.data.user.password
-      //     // ) {
-      //     //   dispatch({
-      //     //     type: actionTypes.SET_USER,
-      //     //     user: response.data.user.userName,
-      //     //   });
-      //     // } else{
-      //     //   setWarning("block");
-      //     // }
-      //   })
-      //   .catch(function (error) {
-      //     // handle error
-      //     console.log(error);
-      //   });
       setinputAge("");
       setinput("");
       setImageUrl("");
@@ -220,7 +134,6 @@ function AddPost() {
               className="messageSender_input"
               placeholder={`Name`}
             ></input>
-
             <div className="container">
               <div className="row">
                 <div className="col-md-4"></div>
@@ -228,7 +141,7 @@ function AddPost() {
                   <Select
                     value={inputAge}
                     onChange={changeHandler}
-                    placeholder="Age"
+                    placeholder={inputAge ? inputAge : "Age"}
                     options={age}
                   />
                 </div>
@@ -247,7 +160,7 @@ function AddPost() {
                     onChange={(e) => {
                       setinputCity(e.value);
                     }}
-                    placeholder="City"
+                    placeholder={inputCity ? inputCity : "City"}
                     options={city}
                   />
                 </div>
@@ -263,7 +176,7 @@ function AddPost() {
                     onChange={(e) => {
                       setinputRegion(e.value);
                     }}
-                    placeholder="Region"
+                    placeholder={inputRegion ? inputRegion : "Region"}
                     options={region}
                   />
                 </div>
@@ -279,7 +192,7 @@ function AddPost() {
                     onChange={(e) => {
                       setinputGender(e.value);
                     }}
-                    placeholder={inputGender ? inputGender : "select gender"}
+                    placeholder={inputGender ? inputGender : "Gender"}
                     options={gender}
                   />
                 </div>
@@ -295,7 +208,7 @@ function AddPost() {
                     onChange={(e) => {
                       setType(e.value);
                     }}
-                    placeholder="Type"
+                    placeholder={type ? type : "Type"}
                     options={missed}
                   />
                 </div>
@@ -345,5 +258,3 @@ function AddPost() {
 
 export default AddPost;
 
-// {"file":imagefile}
-// {}

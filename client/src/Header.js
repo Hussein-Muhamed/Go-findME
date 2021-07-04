@@ -1,5 +1,5 @@
 import React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import "./Header.css";
 import logo from "./images/magnifying-glasses-png-247.png";
 import SearchIcon from "@material-ui/icons/Search";
@@ -16,18 +16,17 @@ import { Link } from "react-router-dom";
 
 function Header(props) {
   const [{ user }, dispatch] = useStateValue();
-  const [menu, setMenu] = useState("none")
- function Logout() {
-  window.location.reload(false);
- }
- function moreOptions() {
-   if (menu == "block") {
-     setMenu("none");
-   } else{
-    setMenu("block");
-   }
-  
- }
+  const [menu, setMenu] = useState("none");
+  function Logout() {
+    window.location.reload(false);
+  }
+  function moreOptions() {
+    if (menu == "block") {
+      setMenu("none");
+    } else {
+      setMenu("block");
+    }
+  }
   return (
     <>
       <div className="header">
@@ -59,17 +58,18 @@ function Header(props) {
             </Link>
           </div>
           <div className="header_option">
-            <SupervisedUserCircleIcon fontSize="large" />
+            <Link style={{ color: "grey" }} to="/trusted">
+              <SupervisedUserCircleIcon fontSize="large" />
+            </Link>
           </div>
         </div>
         <div className="header_right">
           <div>
-            <IconButton>
-              <AddIcon />
-            </IconButton>
+          < Link to="/messages" >
             <IconButton>
               <ForumIcon />
             </IconButton>
+            </Link>
             <IconButton>
               <NotificationsIcon />
             </IconButton>
@@ -80,18 +80,21 @@ function Header(props) {
         </div>
       </div>
       {/* tazbeet el window bta3t el more options */}
-      <div className="more-options" style={{display:`${menu}`}}>
+      <div className="more-options" style={{ display: `${menu}` }}>
         <ul>
           <Link className="more-options-li" to="/profile">
             <li>Profile</li>
           </Link>
-          <Link className="more-options-li"  to="/location">
+          <Link className="more-options-li" to="/location">
             <li>Maps</li>
           </Link>
-          <Link className="more-options-li"  to="/">
+          <Link className="more-options-li" to="/trusted">
             <li>Trusted Friends</li>
           </Link>
-          <Link className="more-options-li"  onClick={Logout} to="/">
+          <Link className="more-options-li" to="/settings">
+            <li>Settings</li>
+          </Link>
+          <Link className="more-options-li" onClick={Logout} to="/">
             <li>Logout</li>
           </Link>
         </ul>

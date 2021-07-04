@@ -14,6 +14,17 @@
 .post_avatar {
   margin-right: 6px;
 }
+.more {
+  position: absolute;
+  right: 2%;
+}
+.more > .more-options {
+  position: absolute;
+  right: 2%;
+  z-index: 99;
+  border-radius: 5px;
+  box-shadow: -5px 5px 28px -9px rgba(0, 0, 0, 0.75);
+}
 .post_info > h3 {
   font-size: medium;
 }
