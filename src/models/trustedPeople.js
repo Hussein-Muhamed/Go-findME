@@ -3,12 +3,8 @@ const validator = require('validator')
 
 
 const tpeopleSchema = new mongoose.Schema({
-    fname:{
-        type:String,
-        required:true
-    }, lname:{
-        type:String,
-        required:true
+    Name:{
+        type:String
     }, email:{
         type:String,
         required:true,
@@ -28,6 +24,8 @@ const tpeopleSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectID,
         required:true,
         ref:'User'
+    }, address:{
+        type:String
     }
 })
 

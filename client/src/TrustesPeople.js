@@ -1,18 +1,17 @@
-import React, {useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Settings.css";
 import Header from "./Header";
 import InfoIcon from "@material-ui/icons/Info";
-// import { useStateValue } from "./StateProvider";
+import { useStateValue } from "./StateProvider";
 import { Button } from "@material-ui/core";
 import axios from "axios"
-import "./Trusted.css";
 
-function Trusted() {
+function Settings() {
   const [userName, setuserName] = useState(null);
   const [password, setpassword] = useState(null);
   const [phoneNumber, setphoneNumber] = useState(null);
   const [email, setemail] = useState(null);
-  // const [ user , dispatch] = useStateValue();
+  const [ user , dispatch] = useStateValue();
   // const [user, setUsers] = useState([]);
   // useEffect(() => {
   //   fetchData();

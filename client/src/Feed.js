@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Feed.css";
 import MessageSender from "./MessageSender";
 import Post from "./Post";
-import StoryReel from "./StoryReel";
+// import StoryReel from "./StoryReel";
 import profilePic from "./images/avatar1.png";
 import BgPost from "./images/background.jpeg";
 import db from "./firebase";
@@ -38,6 +38,7 @@ function Feed(props) {
           userName={post.owner}
           profilePic={'post.data.profilePic'}
           message={post.description}
+          // gender={post.gender}
           timeStamp={post.createdAt}
           image={`http://localhost:3000/public/${post.image}`}
         />

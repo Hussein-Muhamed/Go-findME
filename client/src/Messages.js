@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Messages.css";
 import SendIcon from "@material-ui/icons/Send";
 import { Avatar, Button } from "@material-ui/core";
@@ -6,13 +6,22 @@ import moment from "moment";
 import axios from "axios";
 import Header from "./Header";
 import MessagesUser from "./MessagesUser";
+// import socketIOClient from "socket.io-client";
+import { io } from "socket.io-client";
+
+let socket;
+const SERVER = "http://localhost:3000/";
+
 // import MessageSend from "./MessageSend";
 // import MessageRecieve from "./MessageRecieve";
 
 function Messages(timeStamp) {
+  var user = JSON.parse(localStorage.getItem('user'));
   const [message, setMessage] = useState(false);
   const [messageInput, setMessageInput] = useState("");
   const [data, setData] = useState([]);
+  const dataRef = useRef(null);
+  dataRef.current = data;
 
   function send(e) {
     e.preventDefault();
@@ -20,7 +29,7 @@ function Messages(timeStamp) {
     setMessageInput("");
   }
   //   axios
-  //   .get("https://jsonplaceholder.typicode.com/todos")
+  //   .get("https://jsonplaceholder.typicode.com/todos%22)
   //   .then((res) =>{
   //       console.log(res.data);
   //       var data = res.data;
@@ -32,14 +41,41 @@ function Messages(timeStamp) {
   //       console.log(err);
   //   })
   useEffect(() => {
-    fetchData();
+    fetchData()
+    socket = io(SERVER, {
+      transports: ["websocket", "polling", "flashsocket"],
+    });
+    socket.on("connect", () => {
+      console.log("connect");
+      socket.on("msgFromServer", (newData) => {
+        setData([...dataRef.current, newData]);
+        console.log(dataRef.current)
+      });
+    });
+
+    return () => socket.disconnect();
   }, []);
+
+  const sendMsg = () => {
+    var msg = { _id: user.user._id, owner: user.user.userName, message: messageInput };
+    setData([...dataRef.current, msg]);
+    socket.emit("new_message", msg);
+    // req send post
+  };
+
+
   const fetchData = () => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/todos")
+    axios({
+      method: "get",
+      url: "http://localhost:3000/message",
+      headers: { 
+      "Authorization" : user.token,
+    },
+    })
       .then((response) => {
         console.log(response);
-        setData([...response.data]);
+        console.log(socket.id);
+        setData([...dataRef.current, response.data]);
         console.log(response.data);
       })
       .catch(function (error) {
@@ -52,20 +88,25 @@ function Messages(timeStamp) {
     <>
       <Header />
       <div className="messages">
-        <div className="leftSide">
+        {/* <div className="leftSide">
           <MessagesUser />
           <MessagesUser />
           <MessagesUser />
           <MessagesUser />
           <MessagesUser />
-        </div>
+        </div> */}
         <div className="rightSide">
           <div className="chatViewer">
             <div className="userInfo">
               <Avatar />
-              <label>userName</label>
+              <label>{user.user.userName}</label>
             </div>
             <div className="chatViewer-message">
+              {dataRef.current.map((item) => (
+                <h1> <span>{`${item.owner}: `}</span> {item.message}</h1>
+              ))}
+            </div>
+            {/* <div className="chatViewer-message">
               {data.map((datas) =>
                 datas.id % 2 == 0 ? (
                   <div className="send">
@@ -87,7 +128,7 @@ function Messages(timeStamp) {
                   </div>
                 )
               )}
-            </div>
+            </div> */}
           </div>
           <div className="messageSender">
             <input
@@ -98,7 +139,7 @@ function Messages(timeStamp) {
                 setMessageInput(e.target.value);
               }}
             ></input>
-            <Button type="submit" className="send-btn" onClick={send}>
+            <Button type="submit" className="send-btn" onClick={sendMsg}>
               <SendIcon />
             </Button>
           </div>

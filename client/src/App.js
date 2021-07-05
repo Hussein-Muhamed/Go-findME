@@ -10,6 +10,8 @@ import Signup from "./Signup";
 import Trusted from "./Trusted";
 import Settings from "./Settings";
 import Messages from "./Messages";
+import Search from "./Search";
+
 
 
 function App() {
@@ -47,6 +49,9 @@ function App() {
             </Route>
             <Route path="/messages">
               <Messages />
+            </Route>
+            <Route path="/search">
+              <Search />
             </Route>
           </div>
         </>

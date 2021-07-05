@@ -20,7 +20,7 @@ function AddPost() {
   const [date, setDate] = useState("");
   const [type, setType] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
   const [{ user }, dispatch] = useStateValue();
 
@@ -52,6 +52,7 @@ function AddPost() {
     reader.addEventListener("load", () => {
       localStorage.setItem("image", reader.result);
     });
+    
     setImage(reader.readAsDataURL(e.target.files[0]));
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -63,8 +64,29 @@ function AddPost() {
   //   var bodyFormData = new FormData();
   //   bodyFormData.append('image', image);
   // }
+  const handleUpload = (e) => {
+    var bodyFormData = new FormData();
+    bodyFormData.append('file', image);
+    axios({
+      method: "POST",
+      url: "http://192.168.1.6:8080/api/recognize/is_valid/image/",
+      data: bodyFormData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+        console.log(error.response);
+      });
+    e.preventDefault();
+  }
+
   const handleSubmit = (e) => {
-     if (
+    if (
       input == "" ||
       inputCity == "" ||
       inputRegion == "" ||
@@ -93,9 +115,10 @@ function AddPost() {
         method: "post",
         url: "http://localhost:3000/post",
         data: bodyFormData,
-        headers: { "Content-Type": "multipart/form-data",
-        "Authorization" : localStorage.getItem('token'),
-      },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": localStorage.getItem('token'),
+        },
       })
         .then(function (response) {
           console.log(response);
@@ -248,8 +271,8 @@ function AddPost() {
             setImage(base64)
           }}/> */}
           <h3>**Press on "Upload" button before "Add Post"**</h3>
-          {/* <button onClick={handleUpload}>Upload</button> */}
-          <button onClick={(handleSubmit)}>Add Post</button>
+          <button onClick={handleUpload}>Upload</button>
+          <button onClick={handleSubmit}>Add Post</button>
         </form>
       </div>
     </div>

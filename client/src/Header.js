@@ -58,6 +58,11 @@ function Header(props) {
             </Link>
           </div>
           <div className="header_option">
+            <Link style={{ color: "grey" }} to="/search">
+              <AddIcon fontSize="large" />
+            </Link>
+          </div>
+          <div className="header_option">
             <Link style={{ color: "grey" }} to="/trusted">
               <SupervisedUserCircleIcon fontSize="large" />
             </Link>
@@ -93,6 +98,9 @@ function Header(props) {
           </Link>
           <Link className="more-options-li" to="/settings">
             <li>Settings</li>
+          </Link>
+          <Link className="more-options-li" to="/search">
+            <li>Search</li>
           </Link>
           <Link className="more-options-li" onClick={Logout} to="/">
             <li>Logout</li>

@@ -4,9 +4,11 @@ import "./Contact.css";
 
 function Contact({ src, title }) {
   return (
-    <div className="contact">
+    <div 
+    className="contact">
       <Avatar src={src} />
       <h3>{title}</h3>
+
     </div>
   );
 }

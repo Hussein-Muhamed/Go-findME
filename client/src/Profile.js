@@ -56,7 +56,7 @@ function Profile(props) {
         <Post
           key={'post.data._id'}
           userName={post.owner}
-          profilePic={'post.data.profilePic'}
+          profilePic={post.image}
           message={post.description}
           timeStamp={post.createdAt}
           image={`http://localhost:3000/public/${post.image}`}
