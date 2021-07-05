@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema({
         }
     }],
     avatar:{
-        type:Buffer,
+        type:String,
     }
 },{
     timestamps:true
@@ -67,6 +67,31 @@ userSchema.virtual('posts',{
     ref:'Post',
     localField:'_id',
     foreignField:'owner'
+})
+
+//to create virtual proparty
+userSchema.virtual('messages',{
+    ref:'messages',
+    localField:'_id',
+    foreignField:'uid'
+})
+//to create virtual proparty
+userSchema.virtual('messages',{
+    ref:'messages',
+    localField:'userName',
+    foreignField:'owner'
+})
+//to create virtual proparty
+userSchema.virtual('messages',{
+    ref:'messages',
+    localField:'avatar',
+    foreignField:'uavatar'
+})
+//to create virtual proparty
+userSchema.virtual('notification',{
+    ref:'notification',
+    localField:'_id',
+    foreignField:'uid'
 })
 
 // to create auth token 

@@ -5,22 +5,17 @@ const auth = require('../middleware/auth')
 const { response } = require('express')
 const {sendWelcomeEmail, sendCancelationEmail, resetPassword} = require('../emails/account')
 const multer = require('multer')
+const path = require('path')
+const { upload, deleteImage } = require("../utils/index");
 
-const upload = multer({
-    limits:{
-        fileSize:1000000
-    },
-    fileFilter(req, file, cb){
-        if (!file.originalname.match(/\.(jpg|png|jpeg)$/))
-            return cb(new Error ('please upload image'))
-        cb(undefined, true)
-    }
-})
 // uplod user photo
-router.post('/users/me/avatar',auth , upload.single('avatar'), async (req, res)=>{
-     req.user.avatar = req.file.buffer
-     await req.user.save()
-    res.status(200).send()
+router.post('/users/me/avatar',auth , upload , async (req, res)=>{
+    var img = req.file.path.replace(`src\\public\\`, '');
+    console.log(img)
+    // const imagepath = req.file.path.replace("src","")
+     req.user.avatar = img;
+     const user = await req.user.save()
+    res.status(200).send(user)
 }, (error, req, res, next)=>{
     res.status(400).send({error:error.message})
 })
@@ -31,12 +26,13 @@ router.delete('/users/me/avatar',auth , async (req, res)=>{
     res.send()
 })
 //show user photo
-router.get('/users/:id/avatar',async (req, res)=>{
+router.get('/users/me/avatar', auth , async (req, res)=>{
     try{
-        const user = await User.findById(req.params.id)
+        // const user = await User.findById(req.params.id)
         if(!user || !user.avatar){
           throw new Error()  
         } 
+        
         res.set('Content-Type','image/jpg')
         res.send(user.avatar)
     } catch(e) {

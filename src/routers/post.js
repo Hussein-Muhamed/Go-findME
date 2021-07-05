@@ -12,19 +12,15 @@ const path = require('path')
 
 // upload image 
 router.post('/post' , auth, upload ,  async (req, res)=>{
-    // const posts = await new Post(req.body)
-    
     var img = req.file.path.replace(`src\\public\\`, '');
     const posts = new Post({
         ...req.body,
         image:img,
         owner: req.user.userName,
      })
-
      const imagepath = req.file.path.replace("src","")
      var rootsrc = path.dirname(require.main.filename || process.mainModule.filename);
-     var filePath = rootsrc + imagepath;
-        
+     var filePath = rootsrc + imagepath;  
      const options = {
             method: "POST",
             url: `http://192.168.1.6:8080/api/filesys/add/image/?pid=${posts.id}`,
@@ -36,13 +32,10 @@ router.post('/post' , auth, upload ,  async (req, res)=>{
                 "file" : fs.createReadStream(filePath)
             }
         };
-        
         request(options, function (err, res, body) {
             if(err) console.log(err);
             console.log(body);
         });
-    
-
     try{
         await posts.save()
         res.status(201).send()
@@ -50,9 +43,6 @@ router.post('/post' , auth, upload ,  async (req, res)=>{
         res.status(400).send(e)
     }
 })
-
-
-
 
 //get image from database
 router.get('/post/:id/image', async(req, res)=>{
