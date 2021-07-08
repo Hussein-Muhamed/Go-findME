@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Login.css";
-import FB from "./images/project.png";
+import FB from "./images/animat-search-color.gif";
 import Fb from "./images/Facebook-Logo.svg";
-import { Button } from "@material-ui/core";
+import { Button, responsiveFontSizes } from "@material-ui/core";
 import { auth, provider } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import { actionTypes } from "./reducer";
@@ -52,41 +52,7 @@ function Login() {
         console.log(error);
       });
   };
-  //   e.preventDefault();
-  //   axios
-  //     .post("http://localhost:3000/users/login", {
-  //        email: user,
-  //       password: user1
-  //      })
-  //     .then((response) => {
-  //       console.log(response);
-  //         if (
-  //           user == response.data.user.email &&
-  //           user1 == response.data.user.password
-  //         ) {
-  //           dispatch({
-  //             type: actionTypes.SET_USER,
-  //             user: response.data.user,
-  //           });
-  //           localStorage.setItem('token', response.data.token);
-
-  //         } else{
-  //           setWarning("block");
-  //         }
-  //         // response.json().then((result)=>{
-  //         //   console.log("result", result)
-  //         //   localStorage.setItem('login',JSON.stringify({
-  //         //   login:true,
-  //         //   token:result.token
-  //         // }))
-  //         // })
-          
-  //       })
-  //     .catch(function (error) {
-  //       // handle error
-  //       console.log(error);
-  //     });
-  // };
+  
   const signIn = () => {
     auth
       .signInWithPopup(provider)

@@ -85,12 +85,16 @@
 .more-options{
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 5px 7px -7px rgba(0, 0, 0, 0.75);
+  align-items:center;
+  background-color: rgb(248, 248, 248);
+  border-radius:20px;
+  box-shadow: 0 8px 8px 3px rgba(0, 0, 0, 0.75);
   width: max-content;
+  height: 250px;
   float: right;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  margin-top: 10px;
+  margin-right: 10px;
   
 }
 .more-options > ul{
@@ -103,12 +107,13 @@
   color: black;
 }
 .more-options > ul > .more-options-li > li:hover{
-  background-color: #eff2f5;
+  background-color: #dddddd;
+  transition: 500ms ease-in-out;
   border-radius: 7px;
 }
 .more-options > ul > .more-options-li > li{
   margin-right: 15px;
-  padding: 5px;
+  padding: 10px;
   text-decoration: none;
   color: black;
   font-size: medium;

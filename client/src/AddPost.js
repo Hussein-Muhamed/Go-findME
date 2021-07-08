@@ -22,6 +22,7 @@ function AddPost() {
   const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
+  const [addPost, setAddPost] = useState("none");
   const [{ user }, dispatch] = useStateValue();
 
   var arr = ["white", "black"];
@@ -52,7 +53,7 @@ function AddPost() {
     reader.addEventListener("load", () => {
       localStorage.setItem("image", reader.result);
     });
-    
+
     setImage(reader.readAsDataURL(e.target.files[0]));
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -66,7 +67,7 @@ function AddPost() {
   // }
   const handleUpload = (e) => {
     var bodyFormData = new FormData();
-    bodyFormData.append('file', image);
+    bodyFormData.append("file", image);
     axios({
       method: "POST",
       url: "http://192.168.1.6:8080/api/recognize/is_valid/image/",
@@ -76,14 +77,19 @@ function AddPost() {
       },
     })
       .then(function (response) {
+        if (response.data.code == 200) {
+          alert("file uploaded sucssfully");
+          setAddPost("block");
+        } else alert("No face Detected! \nPlease upload another photo!");
         console.log(response);
       })
       .catch(function (error) {
         console.log(error.message);
         console.log(error.response);
       });
+
     e.preventDefault();
-  }
+  };
 
   const handleSubmit = (e) => {
     if (
@@ -99,25 +105,48 @@ function AddPost() {
       parseInt(input) >= 0
     ) {
       e.preventDefault();
+      alert("Enter valid Data!")
       console.log("error");
     } else {
       var bodyFormData = new FormData();
-      bodyFormData.append('name', input);
-      bodyFormData.append('age', inputAge);
-      bodyFormData.append('city', inputCity);
-      bodyFormData.append('gender', inputGender);
-      bodyFormData.append('region', inputRegion);
-      bodyFormData.append('typeofperson', type);
-      bodyFormData.append('description', inputDescription);
-      bodyFormData.append('date', date);
-      bodyFormData.append('image', image);
+      bodyFormData.append("name", input);
+      bodyFormData.append("age", inputAge);
+      bodyFormData.append("city", inputCity);
+      bodyFormData.append("gender", inputGender);
+      bodyFormData.append("region", inputRegion);
+      bodyFormData.append("typeofperson", type);
+      bodyFormData.append(
+        "description",
+        "Name: " +
+          input + 
+          " " +
+          "Age: " +
+          inputAge +
+          " " +
+          "City: " +
+          inputCity +
+          " " +
+          "Gender: " +
+          inputGender +
+          " " +
+          "Region: " +
+          inputRegion +
+          " " +
+          "Type of person: " +
+          type +
+          " " +
+          "Description: " +
+          inputDescription
+      );
+      bodyFormData.append("date", date);
+      bodyFormData.append("image", image);
       axios({
         method: "post",
         url: "http://localhost:3000/post",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",
-          "Authorization": localStorage.getItem('token'),
+          Authorization: localStorage.getItem("token"),
         },
       })
         .then(function (response) {
@@ -266,13 +295,21 @@ function AddPost() {
             }}
             placeholder="image URL (Optional)"
           ></input>
-          <input type="file" onChange={handleChange} />
+          <input
+            type="file"
+            onClick={() => {
+              setAddPost("none");
+            }}
+            onChange={handleChange}
+          />
           {/* <FileBase64 onDone={({base64}) =>{
             setImage(base64)
           }}/> */}
           <h3>**Press on "Upload" button before "Add Post"**</h3>
           <button onClick={handleUpload}>Upload</button>
-          <button onClick={handleSubmit}>Add Post</button>
+          <button onClick={handleSubmit} style={{ display: `${addPost}` }}>
+            Add Post
+          </button>
         </form>
       </div>
     </div>
@@ -280,4 +317,3 @@ function AddPost() {
 }
 
 export default AddPost;
-

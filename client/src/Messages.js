@@ -66,10 +66,10 @@ function Messages(timeStamp) {
 
   const fetchData = () => {
     axios({
-      method: "get",
+      method: "GET",
       url: "http://localhost:3000/message",
       headers: { 
-      "Authorization" : user.token,
+        Authorization: localStorage.getItem("token"),
     },
     })
       .then((response) => {

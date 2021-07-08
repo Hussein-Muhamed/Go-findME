@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
 //to create virtual proparty
 userSchema.virtual('trusted',{
     ref:'Trusted',
-    localField:'_id',
+    localField:'userName',
     foreignField:'owner'
 })
 

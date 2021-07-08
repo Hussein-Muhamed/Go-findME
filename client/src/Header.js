@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./Header.css";
-import logo from "./images/magnifying-glasses-png-247.png";
+import logo from "./images/Untitled-1.jpg";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
@@ -13,6 +13,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useStateValue } from "./StateProvider";
 import { Link } from "react-router-dom";
+import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 
 function Header(props) {
   const [{ user }, dispatch] = useStateValue();
@@ -31,7 +32,7 @@ function Header(props) {
     <>
       <div className="header">
         <div className="header_left">
-          <img src={logo} alt={""} className="src" />
+          <img src={logo} style={{width:"50px",height:"50px"}} alt={""} className="src" />
           <div className="header_input">
             <SearchIcon />
             <input
@@ -59,7 +60,7 @@ function Header(props) {
           </div>
           <div className="header_option">
             <Link style={{ color: "grey" }} to="/search">
-              <AddIcon fontSize="large" />
+              <ImageSearchIcon fontSize="large" />
             </Link>
           </div>
           <div className="header_option">

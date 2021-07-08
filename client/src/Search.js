@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Settings.css";
 import Header from "./Header";
 import InfoIcon from "@material-ui/icons/Info";
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import FindReplaceIcon from '@material-ui/icons/FindReplace';
 import { useStateValue } from "./StateProvider";
 import { Button } from "@material-ui/core";
 import axios from "axios"
@@ -12,8 +14,13 @@ function Search() {
   const [image, setImage] = useState("");
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    Search();
+    fetchData();
   }, []);
+
+  const fetchData = () => {
+    console.log("fetchData Function!")
+    
+  }
 
   const handleChange = (e) => {
     const reader = new FileReader();
@@ -43,8 +50,27 @@ function Search() {
       },
     })
       .then(function (response) {
-          console.log(response.data)
-          alert(response.message);
+        //   console.log(response.data)
+          var pids = response.data.pids;
+          pids.forEach(e => {
+              console.log(e);
+              axios({
+                method: "get",
+                url: `http://localhost:3000/posts/${e}`
+              })
+              .then((response) => {
+                console.log(response);
+                setPosts([...response.data])
+                
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              });
+          
+          });
+        //   console.log(pids)
+          alert("Image Recognize sucssfully");
       })
       .catch(function (error, response) {
         console.log(error.message);
@@ -58,12 +84,12 @@ function Search() {
   const Search = () => {
     axios({
         method: "get",
-        url: `http://localhost:3000/posts/60e29487c3c00102b0e5bf06`
+        url: `http://localhost:3000/posts/"60e29487c3c00102b0e5bf06"`
       })
       .then((response) => {
         console.log(response);
-        setPosts([...response.data])
-        console.log(response.data)
+        fetchData();
+        
       })
       .catch(function (error) {
         // handle error
@@ -79,8 +105,8 @@ function Search() {
       <div className="setting">
         <div className="setting-left">
           <div className="option">
-            <InfoIcon />
-            <h3>Personal Information</h3>
+            <FindReplaceIcon />
+            <h3>Searching For Person</h3>
           </div>
         </div>
 
@@ -96,11 +122,11 @@ function Search() {
           {posts.map((post) => (
         <Post
           key={'post.data._id'}
-          userName={post.owner}
-          profilePic={post.image}
-          message={post.description}
-          timeStamp={post.createdAt}
-          image={`http://localhost:3000/public/${post.image}`}
+          userName={post.data.owner}
+          profilePic={post.data.image}
+          message={post.data.description}
+          timeStamp={post.data.createdAt}
+          image={post.data.image}
         />
       ))}
           </div>

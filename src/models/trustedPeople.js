@@ -21,7 +21,8 @@ const tpeopleSchema = new mongoose.Schema({
                 throw new Error('Uncorrect phone number')
         }
     }, owner:{
-        type:mongoose.Schema.Types.ObjectID,
+        // type:mongoose.Schema.Types.ObjectID,
+        type:String,
         required:true,
         ref:'User'
     }, address:{

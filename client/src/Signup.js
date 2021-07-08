@@ -69,11 +69,17 @@ class Signup extends Component {
         .post("http://localhost:3000/users", user)
         .then(function (response) {
           console.log(response);
+          if(response.status == 201){
+            alert("User Created Sucssfully!");
+          }
+          else{
+            alert("Unvalid data!")
+          }
           
         })
         .catch(function (error) {
           // handle error
-
+          alert("Unvalid data!")
           console.log(error);
         });
     }
@@ -102,7 +108,7 @@ class Signup extends Component {
               <div className="form-group">
                 <label htmlFor="Phone-Number">PhoneNumber</label>
                 <input
-                  type="text"
+                  type="Number"
                   name="Phone-Number"
                   min="11"
                   max="11"
