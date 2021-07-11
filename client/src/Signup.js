@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./Signup.css";
 import loginImg from "./images/login.svg";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 
 class Signup extends Component {
   constructor(props) {
@@ -69,17 +71,11 @@ class Signup extends Component {
         .post("http://localhost:3000/users", user)
         .then(function (response) {
           console.log(response);
-          if(response.status == 201){
-            alert("User Created Sucssfully!");
-          }
-          else{
-            alert("Unvalid data!")
-          }
-          
+          alert('User is created successfully')
         })
         .catch(function (error) {
           // handle error
-          alert("Unvalid data!")
+          alert("Unvalid Data!");
           console.log(error);
         });
     }
@@ -108,7 +104,7 @@ class Signup extends Component {
               <div className="form-group">
                 <label htmlFor="Phone-Number">PhoneNumber</label>
                 <input
-                  type="Number"
+                  type="text"
                   name="Phone-Number"
                   min="11"
                   max="11"
@@ -156,7 +152,12 @@ class Signup extends Component {
               <p className="warning">Enter Valid Data!</p>
             ) : null}
           </div>
-
+          <div className="signup">
+            <label>Already a member? </label>
+            <Link to="/" className="link">
+              <lable>Signin</lable>
+            </Link>
+          </div>
           <div className="footer">
             <button type="button" className="btn" onClick={this.handleSubmit}>
               Register

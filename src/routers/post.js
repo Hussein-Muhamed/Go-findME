@@ -9,6 +9,7 @@ const axios = require('axios')
 const fs = require('fs')
 const request = require('request')
 const path = require('path')
+const {sendWelcomeEmail, sendCancelationEmail, resetPassword, trusted} = require('../emails/account')
 
 // upload image 
 router.post('/post', auth, upload, async (req, res) => {
@@ -24,7 +25,7 @@ router.post('/post', auth, upload, async (req, res) => {
     var pyStatusCode = 201;
     const options = {
         method: "POST",
-        url: `http://192.168.1.6:8080/api/filesys/add/image/?pid=${posts.id}`,
+        url: `http://192.168.1.2:8080/api/filesys/add/image/?pid=${posts.id}`,
         port: 443,
         headers: {
             "Content-Type": "multipart/form-data"
@@ -78,6 +79,7 @@ router.get('/posts', async (req, res) => {
 router.get('/posts/:id', async (req, res) => {
     try {
         const posts = await Post.findOne(req.params._id)
+        trusted()
         res.status(200).send(posts)
     } catch (e) {
         res.status(500).send(e)

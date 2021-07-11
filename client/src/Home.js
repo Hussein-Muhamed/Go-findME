@@ -13,7 +13,7 @@ function Home() {
       <div className="app_body">
         <SideBar />
         <Feed name="disabled" decoration="r_hidden" cName="d" />
-        {/* <Widgets /> */}
+        <Widgets />
       </div>
     </>
   );

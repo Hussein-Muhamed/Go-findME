@@ -24,7 +24,7 @@ function SideBar() {
         data && (
           <>
             <SideBarRow src={data.image} title={data.name}/>
-            {/* <SideBarRow Icon={ImageIcon} title={'Stared Post'} /> */}
+            
             {/* <SideBarRow Icon={PeopleAltIcon} title='Friends' /> */}
           </>
         )

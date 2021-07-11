@@ -27,9 +27,9 @@ function AddPost() {
 
   var arr = ["white", "black"];
   const age = [
-    { label: "Child", value: "Child" },
-    { label: "Adult", value: "Adult" },
-    { label: "Elder", value: "Elder" },
+    { label: "Child (1-15)", value: "Child" },
+    { label: "Adult (15-35)", value: "Adult" },
+    { label: "Elder (35-80)", value: "Elder" },
   ];
   const gender = [
     { label: "Male", value: "Male" },
@@ -42,10 +42,49 @@ function AddPost() {
   const city = [
     { label: "Cairo", value: "Cairo" },
     { label: "Alex", value: "Alex" },
+    { label: "Giza", value: "Giza" },
+    { label: "Helwan", value: "Helwan" },
+    { label: "Port Said", value: "Port Said" },
+    { label: "Al Mansurah", value: "Al Mansurah" },
+    { label: "Asyut", value: "Asyut" },
+    { label: "Marsa Matruh", value: "Marsa Matruh" },
+    { label: "Kafr ash Shaykh", value: "Kafr ash Shaykh" },
+    { label: "Banha", value: "Banha" },
+    { label: "Al Ghardaqah", value: "Al Ghardaqah" },
+    { label: "Banī Suwayf", value: "Banī Suwayf" },
+    { label: "Suhaj", value: "Suhaj" },
+    { label: "Qina", value: "Qina" },
+    { label: "Luxor", value: "Luxor" },
+    { label: "Al Minya", value: "Al Minya" },
+    { label: "Damanhur", value: "Damanhur" },
+    { label: "Damietta", value: "Damietta" },
+    { label: "Aswan", value: "Aswan" },
+    { label: "Ismailia", value: "Ismailia" },
+    { label: "Al Fayyum", value: "Al Fayyum" },
   ];
   const region = [
     { label: "Ain-Shams", value: "Ain-Shams" },
-    { label: "Masr-Al-Gadeda", value: "Masr-Al-Gadeda" },
+    { label: "15 May", value: "15 May" },
+    { label: "Al Azbakeyah", value: "Al Azbakeyah" },
+    { label: "Al Basatin", value: "Al Basatin" },
+    { label: "Tebin", value: "Tebin" },
+    { label: "El-Khalifa", value: "El-Khalifa" },
+    { label: "Aldarb Alahmar", value: "Aldarb Alahmar" },
+    { label: "Zawya al-Hamra", value: "Zawya al-Hamra" },
+    { label: "El-Zaytoun", value: "El-Zaytoun" },
+    { label: "Sahel", value: "Sahel" },
+    { label: "El Salam", value: "El Salam" },
+    { label: "Sayeda Zeinab", value: "Sayeda Zeinab" },
+    { label: "Shorouk", value: "Shorouk" },
+    { label: "El Daher", value: "El Daher" },
+    { label: "New Cairo", value: "New Cairo" },
+    { label: "El Marg", value: "El Marg" },
+    { label: "Ezbet el Nakhl", value: "Ezbet el Nakhl" },
+    { label: "Matareya", value: "Matareya" },
+    { label: "Maadi", value: "Maadi" },
+    { label: "Maasara", value: "Maasara" },
+    { label: "Mokattam", value: "Mokattam" },
+    { label: "Manyal", value: "Manyal" },
   ];
 
   const handleChange = (e) => {
@@ -70,7 +109,7 @@ function AddPost() {
     bodyFormData.append("file", image);
     axios({
       method: "POST",
-      url: "http://192.168.1.6:8080/api/recognize/is_valid/image/",
+      url: "http://192.168.1.2:8080/api/recognize/is_valid/image/",
       data: bodyFormData,
       headers: {
         "Content-Type": "multipart/form-data",
@@ -170,6 +209,7 @@ function AddPost() {
     setinputAge(e.value);
     console.log(e.value);
   }
+  
   return (
     <div className="add-post">
       <Header />
@@ -177,7 +217,7 @@ function AddPost() {
         <h1>Add Post</h1>
         <form>
           <div className="childInfo">
-            <h3>Child Info</h3>
+            <h3>Person Info</h3>
             <input
               value={input}
               onChange={(e) => {

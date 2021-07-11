@@ -1,6 +1,7 @@
 
 .add-post {
-  height: 100vh;
+  
+  height: 120vh;
   
 }
 .container{
@@ -9,11 +10,15 @@
   margin: 5px 0px 10px 20px;
 }
 .add_post-input {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  margin: 50px auto;
   align-items: center;
   padding: 15px;
+  max-width: 1000px;
+}
+.add_post-input > h1{
+  position: relative;
+  top: 50%;
+  left: 44%;
 }
 .add_post-input > form {
   display: flex;

@@ -7,3 +7,17 @@
     width: 100%;
     height: 1vh;
 }
+.mess{
+    width: 100px;
+    display: flex;
+    justify-content:center;
+    background-color: #2294c9;
+    color: white;
+    padding: 8px;
+    border-radius: 999px;
+        position: absolute;
+        left: 835px;
+        top: 330px;
+      
+    
+}

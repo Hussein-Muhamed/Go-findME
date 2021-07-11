@@ -15,9 +15,11 @@ import mAli from "./images/mAli.png";
 import om from "./images/om.png";
 import SearchIcon from "@material-ui/icons/Search";
 import { set } from "lodash";
+import SideBarRow from "./SideBarRow";
 
 function Trusted() {
   const [Name, setName] = useState(null);
+  const [name, setname] = useState(null);
   const [address, setaddress] = useState(null);
   const [phoneNumber, setphoneNumber] = useState(null);
   const [email, setemail] = useState(null);
@@ -25,11 +27,11 @@ function Trusted() {
   const [trustedName, setTrustedName] = useState([]);
   const [posts, setPosts] = useState([]);
   const [trustedContact, setTrustedContact] = useState("none");
-  {
-    useEffect(() => {
-      show();
-    }, []);
-  }
+  // {
+  //   useEffect(() => {
+  //     show();
+  //   }, []);
+  // }
 
   const Add = (e) => {
     const check = {
@@ -38,7 +40,6 @@ function Trusted() {
       email: email,
       address: address,
     };
-
     axios({
       method: "POST",
       url: "http://localhost:3000/trusted",
@@ -48,9 +49,11 @@ function Trusted() {
       },
     })
       .then((response) => {
+        alert("Trusted people add successfully!");
         console.log(response);
       })
       .catch(function (error) {
+        alert("unvalid data");
         console.log(error);
       });
     e.preventDefault();
@@ -70,46 +73,36 @@ function Trusted() {
     })
       .then((response) => {
         console.log(response);
-        console.log(response.data)
-        var data = response.data;
-        data.forEach((e) => {
-          console.log(e);
-          var dataIndex = e;
-          setTrusted([...JSON.stringify(e)]);
-          setTrustedName([JSON.stringify(e.fname + " " + e.lname)]);
-        })
+        console.log(response.data);
+        setTrusted([...response.data]);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
 
-  // const Remove = (e) => {
-  //   // if(userName == "" || password == ""  phoneNumber == "" ){
+  const Delete = (e) => {
+    const data = {
+      name: name,
+    };
+    axios({
+      method: "DELETE",
+      url: "http://localhost:3000/trusted",
+      data: data,
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    e.preventDefault();
+    setname("");
+  };
 
-  //   // }
-  //   const check = {Name: Name, phoneNumber: phoneNumber, email:email, address: address}
-
-  //   axios({
-  //     method: "patch",
-  //     url: "http://localhost:3000/users/me",
-  //     data: check,
-  //     headers: {
-  //     "Authorization" : localStorage.getItem('token'),
-  //   },
-  //   })
-  //   .then((response) => {
-  //     console.log(response);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-  //   e.preventDefault();
-  //   setuserName("");
-  //   setpassword("");
-  //   setphoneNumber("");
-  //   setemail("");
-  // }
   const trustContacts = () => {
     setTrustedContact("flex");
   };
@@ -127,63 +120,83 @@ function Trusted() {
 
         <div className="trusted-right">
           <div className="trusted-right-row">
-            <div className="label">
-              <label className="username">Enter userName</label>
-              <label className="password">Enter address</label>
-              <label className="phoneNumber">Enter Phone Number</label>
-              <label className="email">Enter Your Email</label>
+            <div className="r-side">
+              <div className="label">
+                <label className="username">Enter userName</label>
+                <label className="password">Enter address</label>
+                <label className="phoneNumber">Enter Phone Number</label>
+                <label className="email">Enter Your Email</label>
+              </div>
+
+              <div className="t-input">
+                <input
+                  value={Name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  className="text"
+                  type="text"
+                  placeholder="Enter Your New UserName"
+                ></input>
+                <br></br>
+
+                <input
+                  value={address}
+                  onChange={(e) => {
+                    setaddress(e.target.value);
+                  }}
+                  className="text"
+                  type="text"
+                  placeholder="Enter Your Address"
+                ></input>
+                <br></br>
+
+                <input
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    setphoneNumber(e.target.value);
+                  }}
+                  className="text"
+                  type="Number"
+                  placeholder="Enter Your New phoneNumber"
+                ></input>
+                <br></br>
+
+                <input
+                  value={email}
+                  onChange={(e) => {
+                    setemail(e.target.value);
+                  }}
+                  className="text"
+                  type="text"
+                  placeholder="Enter Your new Email"
+                ></input>
+              </div>
+
+              <div className="i-input">
+                <div className="label2">
+                  <label className="username">Delete Trusted</label>
+                </div>
+                <input
+                  value={name}
+                  onChange={(e) => {
+                    setname(e.target.value);
+                  }}
+                  className="text"
+                  type="text"
+                  placeholder="Type UserName you want to delete"
+                ></input>
+              </div>
             </div>
-            <div className="t-input">
-              <input
-                value={Name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                className="text"
-                type="text"
-                placeholder="Enter Your New UserName"
-              ></input>
-              <br></br>
 
-              <input
-                value={address}
-                onChange={(e) => {
-                  setaddress(e.target.value);
-                }}
-                className="text"
-                type="text"
-                placeholder="Enter Your Address"
-              ></input>
-              <br></br>
-
-              <input
-                value={phoneNumber}
-                onChange={(e) => {
-                  setphoneNumber(e.target.value);
-                }}
-                className="text"
-                type="Number"
-                placeholder="Enter Your New phoneNumber"
-              ></input>
-              <br></br>
-
-              <input
-                value={email}
-                onChange={(e) => {
-                  setemail(e.target.value);
-                }}
-                className="text"
-                type="text"
-                placeholder="Enter Your new Email"
-              ></input>
-            </div>
-
-            <br></br>
             <Button onClick={Add} className="btn1" type="submit">
               Add trusted people
             </Button>
             <Button onClick={show} className="btn2" type="submit">
               Show trusted people
+            </Button>
+            <Button onClick={Delete} className="btn3" type="submit">
+              Delete trusted people
             </Button>
 
             {/* <Button onClick={(Remove)}type="submit" >Remove trusted people</Button> */}
@@ -191,12 +204,19 @@ function Trusted() {
               <h1>Show Me</h1>
               <label>{trusted}</label>
             </div> */}
-
-            <div className="contacts1">
-              {trustedName.map((t) => {
-                return <Contact src={Avatar1} title="Ali Sherif" />;
-              })}
+            <div className="trusted-people">
+              {trusted.map((post) => (
+                <SideBarRow src={Avatar1} title={post.Name} />
+              ))}
             </div>
+            {/* <div className="contacts1">
+              {
+                trusted.map((t)=>{
+                  
+                  <SideBarRow src={Avatar1} title={t.fname}/>
+                })
+              }
+            </div> */}
           </div>
         </div>
       </div>

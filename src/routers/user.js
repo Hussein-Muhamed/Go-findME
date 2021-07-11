@@ -3,7 +3,7 @@ const router = express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const { response } = require('express')
-const {sendWelcomeEmail, sendCancelationEmail, resetPassword} = require('../emails/account')
+const {sendWelcomeEmail, sendCancelationEmail, resetPassword, trusted} = require('../emails/account')
 const multer = require('multer')
 const path = require('path')
 const { upload, deleteImage } = require("../utils/index");
@@ -71,7 +71,7 @@ router.post('/forgetpassword', async (req, res)=>{
     const user = await User.findOneAndUpdate({email:req.body.email},{password:password2})
     if(!user)
         return res.status(404).send()
-        resetPassword(user.email, user.username, password2)
+        resetPassword(user.email, user.userName, password2)
     // await user.save()
         console.log(password2)
         res.status(200).send("Please Check Your Mail, We send new Password to you")
@@ -127,7 +127,7 @@ router.delete('/users/me', auth , async (req, res)=>{
     try{
        const user = await req.user.remove()
         sendCancelationEmail(user.email, user.userName)
-        res.status(200).send(user)
+        res.status(200).send("Account is Deleted!")
     } catch (e){
         res.status(400).send(e)
     }

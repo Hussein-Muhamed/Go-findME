@@ -6,8 +6,9 @@ import Avatar1 from "./images/avatar1.png";
 import Avatar2 from "./images/avatar2.png";
 import Avatar3 from "./images/avatar3.png";
 import Avatar4 from "./images/avatar4.jpg";
-import mAli from "./images/mAli.png";
+import mAli from "./images/girl.svg";
 import om from "./images/om.png";
+import Mydad from "./images/dad.svg";
 import ChatIcon from "@material-ui/icons/Chat";
 
 function Widgets(props) {
@@ -25,6 +26,7 @@ function Widgets(props) {
         <Contact src={mAli} title="Marwa Ghitas" />
         <Contact src={om} title="Mohand Maher" />
         <Contact src={Avatar4} title="Omar Shedid" />
+        <Contact src={Mydad} title="My Dad" />
       </div>
       <div className="widget_bottom">
         <ChatIcon />

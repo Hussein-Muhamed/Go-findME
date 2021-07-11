@@ -27,10 +27,10 @@ router.get('/trusted', auth, async(req, res)=>{
     }
 })
 
-router.delete('/trusted/:id', auth, async(req, res)=>{
+router.delete('/trusted', auth, async(req, res)=>{
     try{
-        const trusted = await Trusted.findByIdAndDelete(req.params.id)
-        res.status(200).send()
+        const trusted = await Trusted.findOneAndDelete({Name:req.body.name})
+        res.status(200).send(trusted)
     } catch (e) {
         res.status(400).send()
     }

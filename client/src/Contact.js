@@ -2,13 +2,14 @@ import { Avatar } from "@material-ui/core";
 import React from "react";
 import "./Contact.css";
 
-function Contact({ src, title }) {
+function Contact({ src, title, phone }) {
   return (
-    <div 
-    className="contact">
+    <div className="contact">
       <Avatar src={src} />
-      <h3>{title}</h3>
-
+      <div className="info">
+        <h3>{title}</h3>
+        <label>{phone}</label>
+      </div>
     </div>
   );
 }

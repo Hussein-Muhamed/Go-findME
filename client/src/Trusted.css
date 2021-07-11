@@ -14,7 +14,7 @@
     flex-direction: row;
     align-items: baseline;
     margin: 13px 7px 0px 7px;
-
+    
 }
 .trusted-left > .option:hover{
     background-color: #eff2f5;
@@ -30,8 +30,34 @@
     padding: 10px;
     list-style: none;
     margin: 15px 10px 0px 10px;
-
+    
 }
+.i-input{
+    
+    background-color: #eff2f5;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 999px;
+    height: max-content;
+    outline: none;
+    border: none;
+    
+}
+.i-input>.label2{
+    color: red
+}
+.i-input>input{
+    width: 250px;
+}
+.i-input> .text {
+    padding: 1px;
+    margin: 1px;
+    border-radius: 999px;
+    outline: none;
+    border: none;
+    background-color: #eff2f5;
+}
+
 .trusted-right{
     padding: 10px;
     display: flex;
@@ -41,13 +67,20 @@
     margin-top: 20px;
     height: max-content;
     position: relative;
-
+    
 }
 .trusted-right > .trusted-right-row{
     display: flex;
+    flex-direction: column;
+    
 
 }
-.trusted-right > .trusted-right-row > .label{
+.r-side{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.trusted-right > .trusted-right-row > .r-side > .label{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -90,34 +123,44 @@
     outline-width: 0;
 }
 .trusted-right > .trusted-right-row > .btn1{
-    background-color: #6196d6;
-
+    background-color: #07c416;
+    
     padding: 10px;
     color: #eff2f5;
     font-weight: 800;
-    margin: 0px 0px 0px 50px;
+    margin: 0px 0px 5px 50px;
     border-radius: 20px;
     height: max-content;
-    position: absolute;
-    bottom: -60px;
-    left: 32%;
+    
 }
 .trusted-right > .trusted-right-row > .btn2{
-    background-color: #6196d6;
-
+    background-color: #2762aa;
+    
     padding: 10px;
     color: #eff2f5;
     font-weight: 800;
     margin: 0px 0px 0px 50px;
     border-radius: 20px;
     height: max-content;
-    position: absolute;
-    bottom: -60px;
-    left: 48%;
+    
+}
+.trusted-right > .trusted-right-row > .btn3{
+    background-color: #ff1b1b;
+    
+    
+    padding: 10px;
+    color: #eff2f5;
+    font-weight: 900;
+   
+    margin: 10px 0px 0px 50px;
+    border-radius: 20px;
+    
+    height: max-content;
+    
 }
 .contacts1{
     display: flex;
-
+    
     padding: 10px;
     color: black;
     font-weight: 800;
@@ -132,4 +175,9 @@
     position: absolute;
     bottom: -100%;
     left: 2%;
+}
+.trusted-people{
+    display: flex;
+    flex-direction: column;
+    
 }

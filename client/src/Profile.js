@@ -5,11 +5,10 @@ import "./Profile.css";
 import SideBar from "./SideBar";
 import { useStateValue } from "./StateProvider";
 import Widgets from "./Widgets";
-import axios from "axios"
+import axios from "axios";
 import Photo from "./Photo";
 import MessageSender from "./MessageSender";
 import Post from "./Post";
-
 
 function Profile(props) {
   const [posts, setPosts] = useState([]);
@@ -21,19 +20,19 @@ function Profile(props) {
       method: "get",
       url: "http://localhost:3000/posts/me",
       headers: {
-      "Authorization" : localStorage.getItem('token'),
-    },
+        Authorization: localStorage.getItem("token"),
+      },
     })
-    .then((response) => {
-      console.log(response);
-      setPosts([...response.data])
-      console.log(response.data)
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
-  }
+      .then((response) => {
+        console.log(response);
+        setPosts([...response.data]);
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  };
   return (
     // <div className="profile">
     //   <>
@@ -45,29 +44,32 @@ function Profile(props) {
     //   </div>
     // </>
     // </div>
+
     <div className="profile">
       <>
-      <Header />
-      <div className="pro_body">
-         <SideBar />
-         <div className={`fee${props.cName}`}>
-      <Photo cName={props.name} />
-      {posts.map((post) => (
-        <Post
-          key={'post.data._id'}
-          userName={post.owner}
-          profilePic={post.image}
-          message={post.description}
-          timeStamp={post.createdAt}
-          image={`http://localhost:3000/public/${post.image}`}
-        />
-      ))}
-    </div>
-</div>
-    </>
+        <Header />
+        <div className="pro_body">
+          <SideBar />
+          <div className={`fee${props.cName}`}>
+            <Photo cName={props.name} />
+            
+            <button class="mess" type="submit">Messages</button>
+            
+            {posts.map((post) => (
+              <Post
+                key={"post.data._id"}
+                userName={post.owner}
+                profilePic={"post.data.profilePic"}
+                message={post.description}
+                timeStamp={post.createdAt}
+                image={`http://localhost:3000/public/${post.image}`}
+              />
+            ))}
+          </div>
+        </div>
+      </>
     </div>
   );
 }
-
 
 export default Profile;

@@ -41,10 +41,7 @@ function Messages(timeStamp) {
   //       console.log(err);
   //   })
   useEffect(() => {
-<<<<<<< HEAD
     fetchData()
-=======
->>>>>>> 2d566c1cfcf8f61345abce25bf2ba7f2cddd9fe6
     socket = io(SERVER, {
       transports: ["websocket", "polling", "flashsocket"],
     });
@@ -60,7 +57,6 @@ function Messages(timeStamp) {
   }, []);
 
   const sendMsg = () => {
-<<<<<<< HEAD
     var msg = { _id: user.user._id, owner: user.user.userName, message: messageInput };
     setData([...dataRef.current, msg]);
     socket.emit("new_message", msg);
@@ -80,20 +76,6 @@ function Messages(timeStamp) {
         console.log(response);
         console.log(socket.id);
         setData([...dataRef.current, response.data]);
-=======
-    var msg = { id: user.user._id, name: user.user.userName, message: messageInput };
-    setData([...dataRef.current, msg]);
-    socket.emit("new_message", msg);
-  };
-
-  const fetchData = () => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/todos%22")
-      .then((response) => {
-        console.log(response);
-        console.log(socket.id);
-        setData([...response.data]);
->>>>>>> 2d566c1cfcf8f61345abce25bf2ba7f2cddd9fe6
         console.log(response.data);
       })
       .catch(function (error) {
@@ -121,11 +103,7 @@ function Messages(timeStamp) {
             </div>
             <div className="chatViewer-message">
               {dataRef.current.map((item) => (
-<<<<<<< HEAD
                 <h1> <span>{`${item.owner}: `}</span> {item.message}</h1>
-=======
-                <h1> <span>{`${item.name}: `}</span> {item.message}</h1>
->>>>>>> 2d566c1cfcf8f61345abce25bf2ba7f2cddd9fe6
               ))}
             </div>
             {/* <div className="chatViewer-message">

@@ -1,0 +1,15 @@
+.chatViewer-message > .send{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: flex-end;
+    margin-right: 15%;
+}
+.chatViewer-message > .send > .send{
+    background-color: rgb(0, 162, 255);
+    color: white;
+    border-radius: 7px 7px 0px 7px ;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}

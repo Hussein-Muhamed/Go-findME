@@ -38,6 +38,7 @@ function Settings() {
     },
     })
     .then((response) => {
+      alert("User Name is Changed successfully")
       console.log(response);
     })
     .catch(function (error) {

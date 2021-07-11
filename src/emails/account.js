@@ -1,19 +1,29 @@
 const sgMail = require('@sendgrid/mail')
-apikey = "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"
+apikey = "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"
 sgMail.setApiKey(apikey)
+
 
 // sgMail.send({
 //     from: 'gofindmeme@gmail.com',
-//     to : 'gofindmeme@gmail.com',
-//     subject: 'hello',
-//     text: 'hi'
+//     to : 'ali_kreba12@gmail.com',
+//     subject: 'Message from your son',
+//     text: 'Help'
 // })
+
+const trusted = () => {
+sgMail.send({
+    to:"moh239729@gmail.com",
+    from:"gofindmeme@gmail.com",
+    subject: 'Thanks for joining in!',
+    html: `Welcome. Thank You For Joining Us.`
+})
+}
 const sendWelcomeEmail = (email, name) => {
     sgMail.send({
         to: email,
         from: 'gofindmeme@gmail.com',
         subject: 'Thanks for joining in!',
-        html: `Welcome ${name}. Let me know how you get along with the app.`
+        html: `Welcome ${name}. Thank You For Joining Us.`
     })
 }
 
@@ -47,6 +57,6 @@ const resetPassword = (email, name, password2) =>{
 module.exports = {
     sendWelcomeEmail,
     sendCancelationEmail,
-    resetPassword
-    
+    resetPassword,
+    trusted
 }

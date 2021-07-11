@@ -10,9 +10,9 @@ import Signup from "./Signup";
 import Trusted from "./Trusted";
 import Settings from "./Settings";
 import Messages from "./Messages";
-import Search from "./Search";
-
-
+import Reset from "./Reset";
+import Search from './Search';
+import StoryReel from './StoryReel';
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
@@ -22,8 +22,15 @@ function App() {
       {!user ? (
         <>
           <div className="login">
-            <Login />
-            <Signup />
+            <Route path="/" exact>
+              <Login />
+            </Route>
+            <Route path="/reset" exact>
+              <Reset />
+            </Route>
+            <Route path="/SignUp" exact>
+              <Signup />
+            </Route>
           </div>
         </>
       ) : (
@@ -46,6 +53,9 @@ function App() {
             </Route>
             <Route path="/settings">
               <Settings />
+            </Route>
+            <Route path="/storyReel">
+              <StoryReel />
             </Route>
             <Route path="/messages">
               <Messages />
